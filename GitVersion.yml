@@ -1,24 +1,32 @@
 assembly-versioning-scheme: MajorMinorPatch
-assembly-informational-format: '{SemVer}'
-mode: MainLine
-tag-prefix: '[vV]'
-major-version-bump-message: '\+semver:\s?(breaking|major)'
-minor-version-bump-message: '\+semver:\s?(feature|minor)'
-patch-version-bump-message: '\+semver:\s?(fix|patch)'
-commit-message-incrementing: Enabled
+mode: Mainline
 branches:
   master:
     regex: ^master
     tag: ''
+  release:
+    regex: ^releases?[/-]
+    mode: ContinuousDeployment
+    tag: beta
+    is-release-branch: true
+  hotfix:
+    regex: ^hotfix(es)?[/-]
+    tag: beta
+  feature:
+    regex: ^features?[/-]
+    mode: ContinuousDeployment
+    tag: useBranchName
+  pull-request:
+    regex: ^(pull|pull\-requests|pr)[/-]
+    mode: ContinuousDeployment
+    tag: PullRequest
   support:
     regex: ^support[/-]
     tag: ''
-  feature:
-    regex: ^features?[/-]
-    tag: unstable
-  pull-request:
-    regex: ^(pull|pull\-requests|pr)[/-]
-    tag: PullRequest
-    tag-number-pattern: '[/-](?<number>\d+)[-/]'
+  develop:
+    regex: ^dev(elop)?(ment)?$
+    mode: ContinuousDeployment
+    tag: alpha
+    tracks-release-branches: true
 ignore:
   sha: []
