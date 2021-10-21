@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Training\\MiriamRepo3\\ConsoleApplication\\ConsoleApplication.csproj",
-      "projectName": "ConsoleApplication",
-      "projectPath": "C:\\Training\\MiriamRepo3\\ConsoleApplication\\ConsoleApplication.csproj",
+      "projectUniqueName": "C:\\Training\\MiriamRepo3\\ConsoleApplication\\BowlingApplication.csproj",
+      "projectName": "BowlingApplication",
+      "projectPath": "C:\\Training\\MiriamRepo3\\ConsoleApplication\\BowlingApplication.csproj",
       "packagesPath": "C:\\Users\\miriam.tamasila\\.nuget\\packages\\",
       "outputPath": "C:\\Training\\MiriamRepo3\\ConsoleApplication\\obj\\",
       "projectStyle": "PackageReference",

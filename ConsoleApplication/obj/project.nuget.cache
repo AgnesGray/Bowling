@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZnFYg7aM23DFalFizl5AROLU37irJfWI0o+CfvEcyuMeIMzsXxjkxyb48GsqAfHdJScX48VqQmPSmoPkoh8EMg==",
+  "dgSpecHash": "hZa+1AZpTmbxfigNHgemeGmtl5GRdSh7rnyUNkYnt2bIKW77PZMPDo3X630HMjMUN+tAvL0RSNVxkOjG9XAUBA==",
   "success": true,
-  "projectFilePath": "C:\\Training\\MiriamRepo3\\ConsoleApplication\\ConsoleApplication.csproj",
+  "projectFilePath": "C:\\Training\\MiriamRepo3\\ConsoleApplication\\BowlingApplication.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
