@@ -1,7 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
+  <PropertyGroup> 
     <ProjectGuid>{19CC9C95-DDC7-463D-A917-745279794499}</ProjectGuid>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
