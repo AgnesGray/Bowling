@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BowlingApplication
 {
-    interface IPlayer
+    public interface IPlayer
     {
         string Name { get; }
         int TotalScore { get; }

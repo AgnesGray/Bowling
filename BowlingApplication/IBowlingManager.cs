@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BowlingApplication
 {
-    interface IBowlingManager
+    public interface IBowlingManager
     {
         int FramesNumber { get; set; } // ! e ok acest set?
         void StartGame(IEnumerable<string> playerNames);
