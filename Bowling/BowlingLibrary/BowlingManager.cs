@@ -13,11 +13,16 @@ namespace BowlingLibrary
         public void StartGame(IEnumerable<string> playerNames)
         {
             if (playerNames.Count() < 2 || playerNames.Count() > 6)
-                throw new PlayersNumberException("Players number must be between 2 and 6, inclusively.");
+            { 
+                throw new PlayersNumberException("Players number must be between 2 and 6, inclusively."); 
+            }
             else
-            if (ValidateNames(playerNames))
-                gameStarted = true;
-            else throw new NamesNotUniqueException("Players names must be unique.");
+            {
+                if (ValidateNames(playerNames))
+                    gameStarted = true;
+                else 
+                    throw new NamesNotUniqueException("Players names must be unique.");
+            }
         }
 
         public bool ValidateNames(IEnumerable<string> playerNames)

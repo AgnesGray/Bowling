@@ -10,8 +10,5 @@ namespace BowlingLibrary.Exceptions
         public PinsNumberException() { }
         public PinsNumberException(string message)
         : base(message) { }
-
-        public PinsNumberException(string message, Exception inner)
-            : base(message, inner) { }
     }
 }
