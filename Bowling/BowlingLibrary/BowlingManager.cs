@@ -7,7 +7,7 @@ namespace BowlingLibrary
 {
     public class BowlingManager : IBowlingManager
     {
-        protected bool gameStarted { get; set; }
+        public bool gameStarted { get; set; }
 
 
         public void StartGame(IEnumerable<string> playerNames)
@@ -16,21 +16,21 @@ namespace BowlingLibrary
             { 
                 throw new PlayersNumberException("Players number must be between 2 and 6, inclusively."); 
             }
-            else
-            {
-                if (ValidateNames(playerNames))
-                    gameStarted = true;
-                else 
-                    throw new NamesNotUniqueException("Players names must be unique.");
+           
+            if (playerNames.Distinct().Count() != playerNames.Count())
+            { 
+                throw new NamesNotUniqueException("Players names must be unique.");
             }
+
+            this.gameStarted = true;
         }
 
-        public bool ValidateNames(IEnumerable<string> playerNames)
-        {
-            if (playerNames.Distinct().Count() == playerNames.Count())
-                return true;
-            return false;
-        }
+        //public bool ValidateNames(IEnumerable<string> playerNames)
+        //{
+        //    if (playerNames.Distinct().Count() == playerNames.Count())
+        //        return true;
+        //    return true;
+        //}
 
         public void NextShot(int pils)
         {

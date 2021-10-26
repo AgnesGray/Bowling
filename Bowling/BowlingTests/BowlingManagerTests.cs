@@ -18,8 +18,6 @@ namespace BowlingTests
         }
 
 
-
-        //method StartGame - receives a list of names
         [Test]
         public void StartGame_LessThenTwo_Exception() //should return exception
         {
@@ -34,7 +32,6 @@ namespace BowlingTests
             });
         }
 
-        //test peste 6
         [Test]
         public void StartGame_MoreThenSix_Exception() //should return exception
         {
@@ -58,7 +55,7 @@ namespace BowlingTests
             });
         }
 
-        //test not unique players names
+        [Test]
         public void StartGame_NamesNotUnique_Exception() //should return exception
         {
             var Players = new List<string>()
@@ -75,25 +72,35 @@ namespace BowlingTests
                 bowlingManager.StartGame(Players);
             });
         }
-        /*
 
-        //method NextShot(int pils) - receives a value between 0 and 9 which represents how many pils are hit in a turn.
-        //should throw exception if the game has not started yet
-        //should throw exception if game has finished
-        //should throw if the value of "pils" is not correct
+
+
+        //method NextShot(int pils) - receives a value between 0 and 9 which represents how many pils are hit in a turn.       
         [Test]
-        public void NextShot_Test_ShouldReturn()
+        public void NextShot_GameNotStarted_Exception()//should throw exception | game has finished - e ok sa tratez tot aici ?
         {
             //Arrange
-            var bowlingM = new BowlingManager();
             //Act
-            var result = bowlingM.GetStanding();
+            bowlingManager.gameStarted = false;
+
             //Assert
-            Assert.Pass();
+            Assert.Throws<GameStateException>(() =>
+            {
+                bowlingManager.NextShot(2);
+            });
+        }
+
+        [Test]
+        public void NextShot_InvalidPillsNumber_Exception()//should throw exception
+        {            
+            Assert.Throws<GameStateException>(() =>
+            {
+                bowlingManager.NextShot(12);
+            });
         }
 
 
-
+        /*
         //method GetStanding() - returns an ordered list of players, based on total score
         //should throw if the game has not finished
         [Test]
