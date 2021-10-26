@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Runtime.Serialization;
 
 namespace BowlingLibrary.Exceptions
 {
@@ -9,6 +8,8 @@ namespace BowlingLibrary.Exceptions
     {
         public PinsNumberException() { }
         public PinsNumberException(string message)
-        : base(message) { }
+            : base(message) { }
+        protected PinsNumberException(SerializationInfo info, StreamingContext context) 
+            : base(info, context) { }
     }
 }
