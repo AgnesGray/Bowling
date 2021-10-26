@@ -7,7 +7,7 @@ namespace ConsoleApplication
     {
         static void Main(string[] args)
         {
-            Class1 c = new Class1();
+            BowlingManager c = new BowlingManager();
             c.writeInConsole();
 
             Console.WriteLine("Hello World!");
