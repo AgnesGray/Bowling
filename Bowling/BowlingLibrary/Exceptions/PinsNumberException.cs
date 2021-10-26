@@ -5,13 +5,13 @@ using System.Text;
 namespace BowlingLibrary.Exceptions
 {
     [Serializable]
-    public class InvalidPinsNumber : Exception
+    public class PinsNumberException : Exception
     {
-        public InvalidPinsNumber() { }
-        public InvalidPinsNumber(string message)
+        public PinsNumberException() { }
+        public PinsNumberException(string message)
         : base(message) { }
 
-        public InvalidPinsNumber(string message, Exception inner)
+        public PinsNumberException(string message, Exception inner)
             : base(message, inner) { }
     }
 }
