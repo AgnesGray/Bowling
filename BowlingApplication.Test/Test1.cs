@@ -2,42 +2,44 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using BowlingApplication;
 
 namespace BowlingApplication.Test
 {
     [TestFixture]
-    class Test1
+    public class Test1
     {
-        private IBowlingManager bowlingManager;
+        //private IBowlingManager bowlingManager;
 
 
         [SetUp]
         public void Setup()
         {
             //new object
-
-            IBowlingManager newGame = new BowlingManager();
+            var playersList = new List<IPlayer>() { };
+            //IBowlingManager newGame = new BowlingManager();
         }
 
 
-        //se intampla ce trebuie cand vine numar incorect de participanti - 0
+        //exception on incorect players number - less then 2
         [Test]
         public void TestSomething()
         {
-            //
+            //Arrange
+            //Act
+            //Assert
+            Assert.
         }
 
-        //se intampla ce trebuie cand vine numar incorect de participanti - 7
+        //exception on incorect players number - more then 6
 
 
-        //exceptie cand numele nu sunt unice
+        //exception on names not unique
 
 
-        //exceptie cand nr de frames e 0
+        //exception on incorect frames number - less then 1
 
 
-        //exceptie cand nr de frames e >10
+        //exception on incorect frames number - more then 10
 
 
     }
