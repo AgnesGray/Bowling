@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-	<ProjectGuid></ProjectGuid>
+	<ProjectGuid>{32BC87B5-5E53-4267-98E7-2585D0B3709C}</ProjectGuid>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
