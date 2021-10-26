@@ -10,8 +10,5 @@ namespace BowlingLibrary.Exceptions
         public NamesNotUniqueException() { }
         public NamesNotUniqueException(string message)
         : base(message) { }
-
-        public NamesNotUniqueException(string message, Exception inner)
-            : base(message, inner) { }
     }
 }

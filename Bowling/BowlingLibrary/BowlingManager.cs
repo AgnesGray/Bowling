@@ -7,7 +7,7 @@ namespace BowlingLibrary
 {
     public class BowlingManager : IBowlingManager
     {
-        bool gameStarted { get; set; }
+        protected bool gameStarted { get; set; }
 
 
         public void StartGame(IEnumerable<string> playerNames)
@@ -27,7 +27,8 @@ namespace BowlingLibrary
 
         public bool ValidateNames(IEnumerable<string> playerNames)
         {
-            //de implementat
+            if (playerNames.Distinct().Count() == playerNames.Count())
+                return true;
             return false;
         }
 

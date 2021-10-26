@@ -10,8 +10,5 @@ namespace BowlingLibrary.Exceptions
         public PlayersNumberException() { }
         public PlayersNumberException(string message)
         : base(message) { }
-
-        public PlayersNumberException(string message, Exception inner)
-            : base(message, inner) { }
     }
 }
