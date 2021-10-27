@@ -32,9 +32,17 @@ namespace BowlingLibrary
         //    return true;
         //}
 
-        public void NextShot(int pils)
+        public void NextShot(int pins)
         {
-            throw new NotImplementedException();
+            if (this.gameStarted != true) 
+            {
+                throw new GameStateException("Game not started.");
+            }
+
+            if ((pins < 1) || (pins > 10)) //add varianta pt 2nd throw in a frame
+            {
+                throw new PinsNumberException("Invalid number of pins.");
+            }       
         }
 
         public IEnumerable<IPlayer> GetStanding()
