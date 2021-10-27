@@ -26,16 +26,9 @@ namespace BowlingLibrary
             this.GameStarted = true;
         }
 
-        //public bool ValidateNames(IEnumerable<string> playerNames)
-        //{
-        //    if (playerNames.Distinct().Count() == playerNames.Count())
-        //        return true;
-        //    return true;
-        //}
-
         public void NextShot(int pins)
         {
-            if (this.GameStarted != true) 
+            if (this.GameStarted) 
             {
                 throw new GameStateException("Game not started.");
             }
@@ -54,10 +47,16 @@ namespace BowlingLibrary
             }
 
             //order List
-            //OrderPlayersByTotalScore(this.PlayerNames);
+            this.OrderPlayersByTotalScore();
 
             return this.PlayerNames;
         }
+
+        public void OrderPlayersByTotalScore()
+        {
+            this.PlayerNames.OrderBy(o => o.TotalScore).ToList();
+        }
+
 
         //exemplu consumer
         public void writeInConsole()

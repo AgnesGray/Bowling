@@ -116,6 +116,15 @@ namespace BowlingTests
             });
         }
 
-        
+
+
+        //check ordered list
+        [Test]
+        public void OrderPlayersByTotalScore_Test()
+        {
+
+            bowlingManager.OrderPlayersByTotalScore();
+            Assert.Pass();
+        }
     }
 }

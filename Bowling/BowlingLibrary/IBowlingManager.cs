@@ -8,7 +8,11 @@ namespace BowlingLibrary
         public IEnumerable<IPlayer> PlayerNames { get; set; }
 
         void StartGame(IEnumerable<string> playerNames);
-        void NextShot(int pils);
+        void NextShot(int pins);
         IEnumerable<IPlayer> GetStanding();
+
+        //e ok?
+        public void OrderPlayersByTotalScore();
+
     }
 }
