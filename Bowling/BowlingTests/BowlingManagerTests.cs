@@ -19,7 +19,7 @@ namespace BowlingTests
 
 
         [Test]
-        public void StartGame_LessThenTwo_Exception() //should return exception
+        public void ValidatePlayerNames_LessThenTwo_Exception() //should return exception
         {
             //Arrange
             var Players = new List<string>();
@@ -28,12 +28,12 @@ namespace BowlingTests
             //Assert
             Assert.Throws<PlayersNumberException>(() =>
             {
-                bowlingManager.StartGame(Players);
+                bowlingManager.ValidatePlayerNames(Players);
             });
         }
 
         [Test]
-        public void StartGame_MoreThenSix_Exception() //should return exception
+        public void ValidatePlayerNames_MoreThenSix_Exception() //should return exception
         {
             var Players = new List<string>()
             {
@@ -51,12 +51,12 @@ namespace BowlingTests
             //Assert
             Assert.Throws<PlayersNumberException>(() =>
             {
-                bowlingManager.StartGame(Players);
+                bowlingManager.ValidatePlayerNames(Players);
             });
         }
 
         [Test]
-        public void StartGame_NamesNotUnique_Exception() //should return exception
+        public void ValidatePlayerNames_NamesNotUnique_Exception() //should return exception
         {
             var Players = new List<string>()
             {
@@ -69,11 +69,29 @@ namespace BowlingTests
             //Assert
             Assert.Throws<NamesNotUniqueException>(() =>
             {
-                bowlingManager.StartGame(Players);
+                bowlingManager.ValidatePlayerNames(Players);
             });
         }
 
+        [Test]
+        public void SetPlayerAndFrames_Test()
+        {
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                "Player3",
+            };
+            bowlingManager.SetPlayerAndFrames(3, Players);
+            Assert.Pass();
+        }
 
+        [Test]
+        public void StartShoots_Test()
+        {
+            bowlingManager.StartShoots();
+            Assert.Pass();
+        }
 
         //method NextShot(int pils) - receives a value between 0 and 9 which represents how many pils are hit in a turn.       
         [Test]
@@ -116,7 +134,6 @@ namespace BowlingTests
             });
         }
 
-        //test orders list ?
-
+       
     }
 }
