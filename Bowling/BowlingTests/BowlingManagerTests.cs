@@ -76,28 +76,28 @@ namespace BowlingTests
 
 
         //method NextShot(int pils) - receives a value between 0 and 9 which represents how many pils are hit in a turn.       
-        [Test]
-        public void NextShot_GameNotStarted_Exception()//should throw exception | game has finished - e ok sa tratez tot aici ?
-        {
-            //Arrange
-            //Act
-            bowlingManager.gameStarted = false;
+        //[Test]
+        //public void NextShot_GameNotStarted_Exception()//should throw exception | game has finished - e ok sa tratez tot aici ?
+        //{
+        //    //Arrange
+        //    //Act
+        //    bowlingManager.gameStarted = false;
 
-            //Assert
-            Assert.Throws<GameStateException>(() =>
-            {
-                bowlingManager.NextShot(2);
-            });
-        }
+        //    //Assert
+        //    Assert.Throws<GameStateException>(() =>
+        //    {
+        //        bowlingManager.NextShot(2);
+        //    });
+        //}
 
-        [Test]
-        public void NextShot_InvalidPillsNumber_Exception()//should throw exception
-        {            
-            Assert.Throws<GameStateException>(() =>
-            {
-                bowlingManager.NextShot(12);
-            });
-        }
+        //[Test]
+        //public void NextShot_InvalidPillsNumber_Exception()//should throw exception
+        //{            
+        //    Assert.Throws<GameStateException>(() =>
+        //    {
+        //        bowlingManager.NextShot(12);
+        //    });
+        //}
 
 
         /*
