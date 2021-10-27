@@ -11,8 +11,5 @@ namespace BowlingLibrary
         void NextShot(int pins);
         IEnumerable<IPlayer> GetStanding();
 
-        //e ok?
-        public void OrderPlayersByTotalScore();
-
     }
 }

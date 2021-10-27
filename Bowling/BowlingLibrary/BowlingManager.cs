@@ -28,7 +28,7 @@ namespace BowlingLibrary
 
         public void NextShot(int pins)
         {
-            if (this.GameStarted) 
+            if (!this.GameStarted) 
             {
                 throw new GameStateException("Game not started.");
             }
@@ -47,15 +47,10 @@ namespace BowlingLibrary
             }
 
             //order List
-            this.OrderPlayersByTotalScore();
-
-            return this.PlayerNames;
+            return PlayerNames.OrderBy(o => o.TotalScore).ToList();
         }
 
-        public void OrderPlayersByTotalScore()
-        {
-            this.PlayerNames.OrderBy(o => o.TotalScore).ToList();
-        }
+       
 
 
         //exemplu consumer
