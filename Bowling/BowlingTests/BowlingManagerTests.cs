@@ -81,7 +81,7 @@ namespace BowlingTests
         {
             //Arrange
             //Act
-            bowlingManager.gameStarted = false;
+            bowlingManager.GameStarted = false;
 
             //Assert
             Assert.Throws<GameStateException>(() =>
