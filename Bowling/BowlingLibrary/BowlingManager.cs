@@ -7,7 +7,8 @@ namespace BowlingLibrary
 {
     public class BowlingManager : IBowlingManager
     {
-        public bool gameStarted { get; set; }
+        public bool GameStarted { get; set; }
+        public IEnumerable<IPlayer> PlayerNames { get; set; }
 
 
         public void StartGame(IEnumerable<string> playerNames)
@@ -22,7 +23,7 @@ namespace BowlingLibrary
                 throw new NamesNotUniqueException("Players names must be unique.");
             }
 
-            this.gameStarted = true;
+            this.GameStarted = true;
         }
 
         //public bool ValidateNames(IEnumerable<string> playerNames)
@@ -34,7 +35,7 @@ namespace BowlingLibrary
 
         public void NextShot(int pins)
         {
-            if (this.gameStarted != true) 
+            if (this.GameStarted != true) 
             {
                 throw new GameStateException("Game not started.");
             }
@@ -47,7 +48,15 @@ namespace BowlingLibrary
 
         public IEnumerable<IPlayer> GetStanding()
         {
-            throw new NotImplementedException();
+            if (this.GameStarted)
+            {
+                throw new GameStateException("Game should be finished.");
+            }
+
+            //order List
+            //OrderPlayersByTotalScore(this.PlayerNames);
+
+            return this.PlayerNames;
         }
 
         //exemplu consumer

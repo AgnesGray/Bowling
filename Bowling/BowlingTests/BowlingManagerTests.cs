@@ -100,20 +100,22 @@ namespace BowlingTests
         }
 
 
-        /*
-        //method GetStanding() - returns an ordered list of players, based on total score
-        //should throw if the game has not finished
+        
+        //method GetStanding() - returns an ordered list of players, based on total score        
         [Test]
         public void GetStanding_TestGameNotFinished_ShouldReturnException()
         {
             //Arrange
-            var bowlingM = new BowlingManager();
             //Act
-            var result = bowlingM.GetStanding();
+            bowlingManager.GameStarted = true;
+
             //Assert
-            Assert.Pass();
+            Assert.Throws<GameStateException>(() =>
+            {
+                bowlingManager.GetStanding();
+            });
         }
 
-        */
+        
     }
 }
