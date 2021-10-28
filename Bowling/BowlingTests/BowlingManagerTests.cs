@@ -111,7 +111,7 @@ namespace BowlingTests
         [Test]
         public void NextShot_InvalidPinsNumber_Exception()//should throw exception
         {            
-            Assert.Throws<GameStateException>(() =>
+            Assert.Throws<PinsNumberException>(() =>
             {
                 bowlingManager.NextShot(12);
             });
