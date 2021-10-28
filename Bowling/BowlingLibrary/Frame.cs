@@ -10,16 +10,6 @@ namespace BowlingLibrary
         public int? SecondShot { get; set; }
 
 
-        public Frame()
-        { 
-        }
-
-        public Frame(int? firstShot, int? secondShot)
-        {
-            this.FirstShot = firstShot;
-            this.SecondShot = secondShot;
-        }
-
         public bool isStrike()
         {
             if (FirstShot == 10)

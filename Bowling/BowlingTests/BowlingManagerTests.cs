@@ -9,7 +9,7 @@ namespace BowlingTests
     [TestFixture]
     public class BowlingManagerTests
     {
-        
+
         private IBowlingManager bowlingManager;
 
         [SetUp]
@@ -73,6 +73,23 @@ namespace BowlingTests
                 bowlingManager.ValidatePlayers(Players);
             });
         }
+
+
+        [Test]
+        public void ValidatePlayerNames_NamesUnique() //should return exception
+        {
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                "Player3",
+            };
+
+            //Act
+            //Assert
+            Assert.DoesNotThrow(() => bowlingManager.ValidatePlayers(Players));
+        }
+
 
         [Test]
         public void SetPlayerAndFrames_Test()
@@ -176,13 +193,15 @@ namespace BowlingTests
 
             var result = bowlingManager.GetStanding().ToList();
 
-            for (int i=1; i<3; i++)
+            for (int i = 1; i < 3; i++)
             {
-                var first = result[i-1].TotalScore;
+                var first = result[i - 1].TotalScore;
                 var next = result[i].TotalScore;
-                
+
                 Assert.IsTrue(first < next, "The standing is not ordered right.");
-            }           
+            }
         }
+
+        
     }
 }
