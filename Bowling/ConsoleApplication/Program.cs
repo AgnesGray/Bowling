@@ -11,8 +11,8 @@ namespace ConsoleApplication
             BowlingManager bowlingManager = new BowlingManager();
             ConsoleApplication c = new ConsoleApplication();
 
-            /*read players
-            c.writeInConsole("number of players");
+            //read players
+            /*c.writeInConsole("number of players");
             c.readConsole();
 
             //read names
