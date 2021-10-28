@@ -163,10 +163,6 @@ namespace BowlingTests
         public void GetStanding_TestResult()
         {
             //Arrange
-           
-
-            
-
             //Act
             bowlingManager.GameStarted = false;
             var Players = new List<string>()

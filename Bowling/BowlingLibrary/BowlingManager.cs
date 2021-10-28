@@ -152,9 +152,7 @@ namespace BowlingLibrary
                 playersScoreList.Add(new Player(key, currentFrameScore));
             }
 
-           
-            var result = new List<IPlayer>();
-            result = playersScoreList.OrderBy(o => o.TotalScore).ToList();
+            var result = playersScoreList.OrderBy(o => o.TotalScore).ToList();
             
             return result;
         }

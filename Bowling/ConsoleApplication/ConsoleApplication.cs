@@ -4,9 +4,9 @@ using System.Text;
 
 namespace ConsoleApplication
 {
-    class ConsoleApplication
+    public class ConsoleApplicationClass
     {
-        /*public string readConsole()
+        public string readConsole()
         {
             return Console.ReadLine();
         }
@@ -14,6 +14,6 @@ namespace ConsoleApplication
         public void writeInConsole(string a)
         {
             Console.WriteLine(a);
-        }*/
+        }
     }
 }

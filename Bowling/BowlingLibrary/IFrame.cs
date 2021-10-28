@@ -11,7 +11,7 @@ namespace BowlingLibrary
 
         public bool isStrike();
         public bool isSpare();
-        public void SaveFirstShot(int pinsNumber);
-        public void SaveSecondShot(int pinsNumber);
+        public void SaveFirstShot(int pins);
+        public void SaveSecondShot(int pins);
     }
 }

@@ -56,7 +56,7 @@ namespace BowlingTests
         public void SaveFirstShot_Test_Save()
         {
             frame.SaveFirstShot(5);
-            Assert.AreEqual(frame.FirstShot, 5);
+            Assert.AreEqual(5, frame.FirstShot);
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace BowlingTests
         {
             frame.FirstShot = 2;
             frame.SaveFirstShot(5);
-            Assert.AreEqual(frame.FirstShot, 2);
+            Assert.AreEqual(2, frame.FirstShot);
         }
 
 
@@ -73,7 +73,7 @@ namespace BowlingTests
         {
             frame.FirstShot = 1;
             frame.SaveSecondShot(5);
-            Assert.AreEqual(frame.SecondShot, 5);
+            Assert.AreEqual(5, frame.SecondShot);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace BowlingTests
         {
             frame.FirstShot = null;
             frame.SaveFirstShot(5);
-            Assert.AreEqual(frame.SecondShot, null);
+            Assert.AreEqual(null, frame.SecondShot);
         }
     }
 }

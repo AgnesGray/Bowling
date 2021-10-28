@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BowlingLibrary\BowlingLibrary.csproj" />
+    <ProjectReference Include="..\ConsoleApplication\ConsoleApplication.csproj" />
   </ItemGroup>
 
 </Project>
