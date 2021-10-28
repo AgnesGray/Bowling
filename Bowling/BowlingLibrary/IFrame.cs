@@ -4,7 +4,14 @@ using System.Text;
 
 namespace BowlingLibrary
 {
-    interface IFrame
+    public interface IFrame
     {
+        public int? FirstShot { get; set; }
+        public int? SecondShot { get; set; }
+
+        public bool isStrike();
+        public bool isSpare();
+        public void SaveFirstShot(int pinsNumber);
+        public void SaveSecondShot(int pinsNumber);
     }
 }

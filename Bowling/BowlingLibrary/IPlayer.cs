@@ -7,6 +7,6 @@ namespace BowlingLibrary
     public interface IPlayer
     {
         string Name { get; }
-        int TotalScore { get; }
+        int? TotalScore { get; }
     }
 }

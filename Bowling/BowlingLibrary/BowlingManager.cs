@@ -9,7 +9,15 @@ namespace BowlingLibrary
     {
         public int framesNumber { get; set; }
         public bool GameStarted { get; set; }
-        
+
+        public Dictionary<string, List<Frame>> playerFrames { get; set; }
+
+
+        public BowlingManager(int frames)
+        {
+            framesNumber = frames;
+            this.GameStarted = false; //game not started
+        }
 
         public void StartGame(IEnumerable<string> playerNames)
         {
@@ -35,30 +43,48 @@ namespace BowlingLibrary
             }
         }
 
-        //metoda de setare player si frame-uri
+        
         public void SetPlayerAndFrames(int framesNumber, IEnumerable<string> playerNames)
         {
-            Dictionary<string, List<Frame>> playerFrames = new Dictionary<string, List<Frame>>();
+            playerFrames = new Dictionary<string, List<Frame>>();
             
             foreach (string p in playerNames)
             {
                 var frames = new List<Frame>();
-                for (int i=1; i<=framesNumber; i++) //?last frame
+                for (int i=1; i<=framesNumber; i++)
                 {
                     frames.Add(new Frame());
                 }
 
+                //implement last shot
                 playerFrames.Add(p, frames);
             }
         }
 
-        //StartShoots();
-        //face NextShot pana la last frame of last player
-        //lucreaza cu obiectul frame
-        // verifica ca e strike sau spare
-        // si seteaza in obiectul frame
+               
         public void StartShoots()
         {
+            
+            foreach (var playerFrame in playerFrames.Values)
+            {
+                for (int i=0; i<framesNumber; i++ )
+                {
+                    
+                    var num = new Random();
+                    int pins = num.Next(10);
+
+                    playerFrame[i].SaveFirstShot(pins);
+                    
+
+                    if (pins < 10)
+                    {
+                        pins = num.Next(10-pins);
+                        playerFrame[i].SaveSecondShot(pins);
+                    }
+                }
+
+                //implement last shot
+            }
 
             this.GameStarted = false;
         }
@@ -71,13 +97,14 @@ namespace BowlingLibrary
                 throw new GameStateException("Game not started.");
             }
 
-            if ((pins < 1) || (pins > 10)) //add varianta pt 2nd throw in a frame
+            if ((pins < 1) || (pins > 10))
             {
                 throw new PinsNumberException("Invalid number of pins.");
             }   
             
-            //ce face???
+           
         }
+
 
         public IEnumerable<IPlayer> GetStanding()
         {
@@ -86,9 +113,50 @@ namespace BowlingLibrary
                 throw new GameStateException("Game should be finished.");
             }
 
-            var playersList = new List<IPlayer>(); //populate
+            var playersScoreList = new List<IPlayer>();
 
-            return playersList.OrderBy(o => o.TotalScore).ToList();
+            
+            foreach (var (key,playerFrame) in playerFrames)
+            {
+                int countDouble = 0;
+                int? currentFrameScore = 0;
+                for (int i = 0; i < framesNumber; i++)
+                {
+                    
+                    if (playerFrame[i].isStrike())
+                    {
+                        countDouble++;
+                        currentFrameScore += 10 * countDouble;
+                    }
+
+                    else
+                    {
+                        int? firstAndSecond = playerFrame[i].FirstShot + playerFrame[i].SecondShot;
+
+                        currentFrameScore += firstAndSecond;
+
+                        if (countDouble != 0) {
+                            currentFrameScore += firstAndSecond;
+                        }
+                        else if (i>0 && playerFrame[i-1].isSpare())
+                        {
+                            currentFrameScore += playerFrame[i].FirstShot;
+
+                        }
+
+                        countDouble = 0;
+                    }
+                }
+
+
+                playersScoreList.Add(new Player(key, currentFrameScore));
+            }
+
+           
+            var result = new List<IPlayer>();
+            result = playersScoreList.OrderBy(o => o.TotalScore).ToList();
+            
+            return result;
         }
        
     }

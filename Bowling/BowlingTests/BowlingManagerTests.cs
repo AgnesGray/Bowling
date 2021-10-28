@@ -2,6 +2,7 @@ using NUnit.Framework;
 using BowlingLibrary;
 using BowlingLibrary.Exceptions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BowlingTests
 {
@@ -14,7 +15,7 @@ namespace BowlingTests
         [SetUp]
         public void MainSetup()
         {
-            bowlingManager = new BowlingManager();
+            bowlingManager = new BowlingManager(3);
         }
 
 
@@ -89,13 +90,21 @@ namespace BowlingTests
         [Test]
         public void StartShoots_Test()
         {
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                "Player3",
+            };
+            bowlingManager.SetPlayerAndFrames(3, Players);
             bowlingManager.StartShoots();
+
             Assert.Pass();
         }
 
         //method NextShot(int pils) - receives a value between 0 and 9 which represents how many pils are hit in a turn.       
         [Test]
-        public void NextShot_GameNotStarted_Exception()//should throw exception | game has finished - e ok sa tratez tot aici ?
+        public void NextShot_GameNotStarted_Exception()
         {
             //Arrange
             //Act
@@ -109,7 +118,7 @@ namespace BowlingTests
         }
 
         [Test]
-        public void NextShot_InvalidPinsNumber_Exception()//should throw exception
+        public void NextShot_InvalidPinsNumber_Exception()
         {
             //Arrange
             //Act
@@ -122,7 +131,7 @@ namespace BowlingTests
         }
 
         [Test]
-        public void NextShot_ValidPinsNumber_Exception()//should throw exception
+        public void NextShot_ValidPinsNumber()
         {
             //Arrange
             //Act
@@ -150,6 +159,34 @@ namespace BowlingTests
             });
         }
 
-       
+        [Test]
+        public void GetStanding_TestResult()
+        {
+            //Arrange
+           
+
+            
+
+            //Act
+            bowlingManager.GameStarted = false;
+            var Players = new List<string>()
+            {
+                "A",
+                "B",
+                "C",
+            };
+            bowlingManager.SetPlayerAndFrames(3, Players);
+            bowlingManager.StartShoots();
+
+            var result = bowlingManager.GetStanding().ToList();
+
+            for (int i=1; i<3; i++)
+            {
+                var first = result[i-1].TotalScore;
+                var next = result[i].TotalScore;
+                
+                Assert.IsTrue(first < next, "The standing is not ordered right.");
+            }           
+        }
     }
 }

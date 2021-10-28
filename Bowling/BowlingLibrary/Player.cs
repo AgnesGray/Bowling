@@ -8,9 +8,9 @@ namespace BowlingLibrary
     {
         public string Name { get; set; }
 
-        public int TotalScore { get; set; }
+        public int? TotalScore { get; set; }
 
-        public Player(string Name, int TotalScore)
+        public Player(string Name, int? TotalScore)
         {
             this.Name = Name;
             this.TotalScore = TotalScore;

@@ -5,7 +5,7 @@ namespace BowlingLibrary
     public interface IBowlingManager
     {
         public bool GameStarted { get; set; }
-        
+        public Dictionary<string, List<Frame>> playerFrames { get; set; }
 
         public void StartGame(IEnumerable<string> playerNames);
         public void NextShot(int pins);
