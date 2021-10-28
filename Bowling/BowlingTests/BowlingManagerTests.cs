@@ -28,7 +28,7 @@ namespace BowlingTests
             //Assert
             Assert.Throws<PlayersNumberException>(() =>
             {
-                bowlingManager.ValidatePlayerNames(Players);
+                bowlingManager.ValidatePlayers(Players);
             });
         }
 
@@ -51,7 +51,7 @@ namespace BowlingTests
             //Assert
             Assert.Throws<PlayersNumberException>(() =>
             {
-                bowlingManager.ValidatePlayerNames(Players);
+                bowlingManager.ValidatePlayers(Players);
             });
         }
 
@@ -69,7 +69,7 @@ namespace BowlingTests
             //Assert
             Assert.Throws<NamesNotUniqueException>(() =>
             {
-                bowlingManager.ValidatePlayerNames(Players);
+                bowlingManager.ValidatePlayers(Players);
             });
         }
 

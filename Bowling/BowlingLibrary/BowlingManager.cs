@@ -7,14 +7,13 @@ namespace BowlingLibrary
 {
     public class BowlingManager : IBowlingManager
     {
-        public int framesNumber;
+        public int framesNumber { get; set; }
         public bool GameStarted { get; set; }
-        //public IEnumerable<IPlayer> PlayerNames { get; set; }
-        private Dictionary<string, List<Frame>> playerFrames;
+        
 
         public void StartGame(IEnumerable<string> playerNames)
         {
-            ValidatePlayerNames(playerNames);
+            ValidatePlayers(playerNames);
 
             SetPlayerAndFrames(framesNumber, playerNames); //metoda de setare player si frame-uri - apelare
 
@@ -24,25 +23,23 @@ namespace BowlingLibrary
         }
 
 
-        public void ValidatePlayerNames(IEnumerable<string> playerNames) {
-            if (playerNames.Count() < 2 || playerNames.Count() > 6)
+        public void ValidatePlayers(IEnumerable<string> players) {
+            if (players.Count() < 2 || players.Count() > 6)
             {
                 throw new PlayersNumberException("Players number must be between 2 and 6, inclusively.");
             }
 
-            if (playerNames.Distinct().Count() != playerNames.Count())
+            if (players.Distinct().Count() != players.Count())
             {
                 throw new NamesNotUniqueException("Players names must be unique.");
             }
-
-            return;
         }
 
         //metoda de setare player si frame-uri
         public void SetPlayerAndFrames(int framesNumber, IEnumerable<string> playerNames)
         {
-            playerFrames = new Dictionary<string, List<Frame>>();
-
+            Dictionary<string, List<Frame>> playerFrames = new Dictionary<string, List<Frame>>();
+            
             foreach (string p in playerNames)
             {
                 var frames = new List<Frame>();
@@ -87,20 +84,9 @@ namespace BowlingLibrary
                 throw new GameStateException("Game should be finished.");
             }
 
-            
-            var playersList = new List<IPlayer>();
+            var playersList = new List<IPlayer>(); //populate
 
-            //add player name and score to the list 
-
-            //foreach(var p in playerFrames)
-            //{
-            //    var player = new Player(playerFrames., playerFrames.Ge);
-            //    var playersList.Add();
-            //}
-
-            playersList.OrderBy(o => o.TotalScore).ToList();
-
-            return playersList;
+            return playersList.OrderBy(o => o.TotalScore).ToList();
         }
        
     }
