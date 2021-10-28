@@ -74,7 +74,9 @@ namespace BowlingLibrary
             if ((pins < 1) || (pins > 10)) //add varianta pt 2nd throw in a frame
             {
                 throw new PinsNumberException("Invalid number of pins.");
-            }       
+            }   
+            
+            //ce face???
         }
 
         public IEnumerable<IPlayer> GetStanding()

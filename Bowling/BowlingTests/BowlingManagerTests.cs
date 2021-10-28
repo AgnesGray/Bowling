@@ -110,7 +110,11 @@ namespace BowlingTests
 
         [Test]
         public void NextShot_InvalidPinsNumber_Exception()//should throw exception
-        {            
+        {
+            //Arrange
+            //Act
+            bowlingManager.GameStarted = true;
+
             Assert.Throws<PinsNumberException>(() =>
             {
                 bowlingManager.NextShot(12);
@@ -120,10 +124,13 @@ namespace BowlingTests
         [Test]
         public void NextShot_ValidPinsNumber_Exception()//should throw exception
         {
-            Assert.Throws<PinsNumberException>(() =>
-            {
-                bowlingManager.NextShot(8);
-            });
+            //Arrange
+            //Act
+            bowlingManager.GameStarted = true;
+
+            bowlingManager.NextShot(8);
+
+            Assert.Pass();
         }
 
 
