@@ -11,19 +11,7 @@ namespace ConsoleApplication
             BowlingManager bowlingManager = new BowlingManager();
             ConsoleApplication c = new ConsoleApplication();
 
-            //read players
-            /*c.writeInConsole("number of players");
-            c.readConsole();
-
-            //read names
-            c.writeInConsole("players names");
-            c.readConsole();
-
-            //read frames
-            c.writeInConsole("number of frames");
-            c.readConsole();*/
-
-
+            
             //get nr of frames
             bowlingManager.framesNumber = 3;
 
@@ -49,7 +37,7 @@ namespace ConsoleApplication
             //startGame
             //shot
 
-            c.writeInConsole("Standing: ");
+            //c.writeInConsole("Standing: ");
 
             
         }

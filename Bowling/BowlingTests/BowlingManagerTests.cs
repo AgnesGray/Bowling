@@ -117,8 +117,17 @@ namespace BowlingTests
             });
         }
 
+        [Test]
+        public void NextShot_ValidPinsNumber_Exception()//should throw exception
+        {
+            Assert.Throws<PinsNumberException>(() =>
+            {
+                bowlingManager.NextShot(8);
+            });
+        }
 
-        
+
+
         //method GetStanding() - returns an ordered list of players, based on total score        
         [Test]
         public void GetStanding_TestGameNotFinished_ShouldReturnException()

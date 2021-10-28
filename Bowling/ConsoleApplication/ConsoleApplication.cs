@@ -6,7 +6,7 @@ namespace ConsoleApplication
 {
     class ConsoleApplication
     {
-        public string readConsole()
+        /*public string readConsole()
         {
             return Console.ReadLine();
         }
@@ -14,6 +14,6 @@ namespace ConsoleApplication
         public void writeInConsole(string a)
         {
             Console.WriteLine(a);
-        }
+        }*/
     }
 }
