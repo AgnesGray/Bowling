@@ -309,5 +309,73 @@ namespace BowlingTests
             Assert.AreEqual(45, result[2].TotalScore);
         }
 
+
+
+        [Test]
+        public void GetStanding_TestScores_AllDifferent()
+        {
+
+            BowlingManager bowlingManager2 = new BowlingManager(9);
+            //Arrange
+            //Act
+
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                //"Player3",
+            };
+
+            bowlingManager2.StartGame(Players);
+
+
+            //1st
+            bowlingManager2.NextShot(9);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(1);
+            //2nd
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(10);
+            //3rd
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(10);
+            //4th
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(10);
+            //5th
+            bowlingManager2.NextShot(8);
+            bowlingManager2.NextShot(2);
+            bowlingManager2.NextShot(8);
+            bowlingManager2.NextShot(2);
+            //6th
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(5);
+            //7th
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(1);
+            //8th
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(1);
+            //9th
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(3);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(1);
+
+            //extra
+            bowlingManager2.NextShot(5);
+
+            var result = bowlingManager2.GetStanding().ToList();
+
+            Assert.AreEqual(116, result[0].TotalScore);
+            Assert.AreEqual(184, result[1].TotalScore);
+            //Assert.AreEqual(45, result[2].TotalScore);
+        }
+
     }
 }

@@ -149,7 +149,7 @@ namespace BowlingLibrary
                     
                     if (gameBoard[i].isStrike())
                     {
-                        countDouble++;
+                        countDouble = countDouble<3 ? countDouble+1 : countDouble;
                         currentFrameScore += 10 * countDouble;
                     }
 
@@ -161,14 +161,19 @@ namespace BowlingLibrary
 
                         if (countDouble != 0) {
                             currentFrameScore += firstAndSecond;
-                        }
-                        else if (i>0 && gameBoard[i-1].isSpare())
-                        {
-                            currentFrameScore += gameBoard[i].FirstShot;
 
+                            if (i>1 && countDouble > 1)
+                            {
+                                currentFrameScore += gameBoard[i].FirstShot;
+                            }
                         }
-
+                       
                         countDouble = 0;
+                    }
+
+                    if (i > 0 && gameBoard[i - 1].isSpare())
+                    {
+                        currentFrameScore += gameBoard[i].FirstShot;
                     }
                 }
 
