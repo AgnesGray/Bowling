@@ -152,22 +152,19 @@ namespace BowlingLibrary
                         countDouble = countDouble<3 ? countDouble+1 : countDouble;
                         currentFrameScore += 10 * countDouble;
                     }
-
                     else
                     {
-                        int? firstAndSecond = gameBoard[i].FirstShot + gameBoard[i].SecondShot;
-
-                        currentFrameScore += firstAndSecond;
+                        currentFrameScore += gameBoard[i].shotsSum();
 
                         if (countDouble != 0) {
-                            currentFrameScore += firstAndSecond;
+                            currentFrameScore += gameBoard[i].shotsSum();
 
                             if (i>1 && countDouble > 1)
                             {
                                 currentFrameScore += gameBoard[i].FirstShot;
                             }
                         }
-                       
+
                         countDouble = 0;
                     }
 
@@ -175,6 +172,7 @@ namespace BowlingLibrary
                     {
                         currentFrameScore += gameBoard[i].FirstShot;
                     }
+                    
                 }
 
                 playersScoreList.Add(new Player(key, currentFrameScore));

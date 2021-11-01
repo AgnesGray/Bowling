@@ -44,5 +44,10 @@ namespace BowlingLibrary
                 SecondShot = pins;//pins <= 10 - FirstShot
             }
         }
+
+        public int? shotsSum()
+        {
+            return this.FirstShot + this.SecondShot;
+        }
     }
 }
