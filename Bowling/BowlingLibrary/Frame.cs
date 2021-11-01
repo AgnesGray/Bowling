@@ -39,7 +39,7 @@ namespace BowlingLibrary
 
         public void SaveSecondShot(int pins)
         {
-            if (SecondShot == null && FirstShot != null && !isStrike())
+            if (SecondShot == null && FirstShot != null)
             {
                 SecondShot = pins;//pins <= 10 - FirstShot
             }

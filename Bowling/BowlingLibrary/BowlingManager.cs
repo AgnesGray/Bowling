@@ -10,13 +10,15 @@ namespace BowlingLibrary
         public int framesNumber { get; set; }
         public bool GameStarted { get; set; }
 
-        public Dictionary<string, List<Frame>> playerFrames { get; set; }
+        public Dictionary<string, List<Frame>> gameBoard { get; set; }
 
+        protected int frameOrderNumber = 0;
+        protected int maximShot = 10;
 
         public BowlingManager(int frames)
         {
             framesNumber = frames;
-            this.GameStarted = false; //game not started
+            this.GameStarted = false;
         }
 
         public void StartGame(IEnumerable<string> playerNames)
@@ -26,8 +28,6 @@ namespace BowlingLibrary
             SetPlayerAndFrames(framesNumber, playerNames); //metoda de setare player si frame-uri - apelare
 
             this.GameStarted = true;
-
-            StartShoots();
         }
 
 
@@ -43,69 +43,84 @@ namespace BowlingLibrary
             }
         }
 
-        
+
         public void SetPlayerAndFrames(int framesNumber, IEnumerable<string> playerNames)
         {
-            playerFrames = new Dictionary<string, List<Frame>>();
-            
+            gameBoard = new Dictionary<string, List<Frame>>();
+
             foreach (string p in playerNames)
             {
                 var frames = new List<Frame>();
-                for (int i=1; i<=framesNumber; i++)
+                for (int i = 1; i <= framesNumber; i++)
                 {
                     frames.Add(new Frame());
                 }
 
                 //implement last shot
-                playerFrames.Add(p, frames);
+                gameBoard.Add(p, frames);
             }
         }
 
-               
-        public void StartShoots()
-        {
-            
-            foreach (var playerFrame in playerFrames.Values)
-            {
-                for (int i=0; i<framesNumber; i++ )
-                {
-                    
-                    var num = new Random();
-                    int pins = num.Next(10);
 
-                    playerFrame[i].SaveFirstShot(pins);
-                    
-
-                    if (pins < 10)
-                    {
-                        pins = num.Next(10-pins);
-                        playerFrame[i].SaveSecondShot(pins);
-                    }
-                }
-
-                //implement last shot
-            }
-
-            this.GameStarted = false;
-        }
 
 
         public void NextShot(int pins)
         {
-            if (!this.GameStarted) 
+            if (!this.GameStarted)
             {
                 throw new GameStateException("Game not started.");
             }
 
-            if ((pins < 1) || (pins > 10))
+            if ((pins < 1) || (pins > maximShot))
             {
                 throw new PinsNumberException("Invalid number of pins.");
-            }   
-            
-           
+            }
+
+            bool saved = false;
+
+            foreach (var framesList in gameBoard.Values)//fiecare lista a unui jucator = ture
+            {
+                if (framesList[frameOrderNumber].FirstShot == null)
+                {
+                    framesList[frameOrderNumber].SaveFirstShot(pins);
+                    saved = true;
+
+                    if (pins == 10)
+                    {
+                        framesList[frameOrderNumber].SaveSecondShot(0);
+                    }
+                    else
+                    {
+                        maximShot = 10 - pins;
+                    }
+                    break;
+                }
+                else if (framesList[frameOrderNumber].SecondShot == null)
+                {
+                    framesList[frameOrderNumber].SaveSecondShot(pins);
+                    saved = true;
+                    maximShot = 10;
+                    //daca e ultima tura -> frame list e ultima
+
+                    //checked last
+                    break;
+                }
+            }
+
+            if (!saved)
+            {
+                if (frameOrderNumber == framesNumber - 1)
+                { 
+                    this.GameStarted = false; //stop Game
+                }
+                else
+                {
+                    frameOrderNumber++;
+                    NextShot(pins);
+                }
+            }
         }
-
-
+    
         public IEnumerable<IPlayer> GetStanding()
         {
             if (this.GameStarted)
@@ -116,14 +131,14 @@ namespace BowlingLibrary
             var playersScoreList = new List<IPlayer>();
 
             
-            foreach (var (key,playerFrame) in playerFrames)
+            foreach (var (key, gameBoard) in gameBoard)
             {
                 int countDouble = 0;
                 int? currentFrameScore = 0;
                 for (int i = 0; i < framesNumber; i++)
                 {
                     
-                    if (playerFrame[i].isStrike())
+                    if (gameBoard[i].isStrike())
                     {
                         countDouble++;
                         currentFrameScore += 10 * countDouble;
@@ -131,16 +146,16 @@ namespace BowlingLibrary
 
                     else
                     {
-                        int? firstAndSecond = playerFrame[i].FirstShot + playerFrame[i].SecondShot;
+                        int? firstAndSecond = gameBoard[i].FirstShot + gameBoard[i].SecondShot;
 
                         currentFrameScore += firstAndSecond;
 
                         if (countDouble != 0) {
                             currentFrameScore += firstAndSecond;
                         }
-                        else if (i>0 && playerFrame[i-1].isSpare())
+                        else if (i>0 && gameBoard[i-1].isSpare())
                         {
-                            currentFrameScore += playerFrame[i].FirstShot;
+                            currentFrameScore += gameBoard[i].FirstShot;
 
                         }
 
@@ -148,14 +163,12 @@ namespace BowlingLibrary
                     }
                 }
 
-
                 playersScoreList.Add(new Player(key, currentFrameScore));
             }
 
             var result = playersScoreList.OrderBy(o => o.TotalScore).ToList();
             
             return result;
-        }
-       
+        }     
     }
 }

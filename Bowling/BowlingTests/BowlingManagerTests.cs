@@ -104,20 +104,7 @@ namespace BowlingTests
             Assert.Pass();
         }
 
-        [Test]
-        public void StartShoots_Test()
-        {
-            var Players = new List<string>()
-            {
-                "Player1",
-                "Player2",
-                "Player3",
-            };
-            bowlingManager.SetPlayerAndFrames(3, Players);
-            bowlingManager.StartShoots();
-
-            Assert.Pass();
-        }
+        
 
         //method NextShot(int pils) - receives a value between 0 and 9 which represents how many pils are hit in a turn.       
         [Test]
@@ -147,21 +134,62 @@ namespace BowlingTests
             });
         }
 
+
+
         [Test]
-        public void NextShot_ValidPinsNumber()
+        public void NextShot_Save()
         {
             //Arrange
-            //Act
             bowlingManager.GameStarted = true;
 
-            bowlingManager.NextShot(8);
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                "Player3",
+            };
+            bowlingManager.SetPlayerAndFrames(3, Players);
 
-            Assert.Pass();
+            var list = bowlingManager.gameBoard["Player1"];
+
+            int? beforeShotNull = list[0].FirstShot;
+            Assert.AreEqual(null, beforeShotNull);
+
+            //Act
+            bowlingManager.NextShot(10);
+
+            int? afterShotValue = list[0].FirstShot;
+            Assert.AreEqual(10, afterShotValue);
+            Assert.AreEqual(0, list[0].SecondShot);
+            Assert.IsTrue(list[0].isStrike());
         }
 
 
+        [Test]
+        public void NextShot_Save2()
+        {
+            //Arrange
+            bowlingManager.GameStarted = true;
 
-        //method GetStanding() - returns an ordered list of players, based on total score        
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                "Player3",
+            };
+            bowlingManager.SetPlayerAndFrames(3, Players);
+
+            //Act
+            bowlingManager.StartGame(Players);
+            bowlingManager.NextShot(9);
+            bowlingManager.NextShot(1);
+
+            int? first = bowlingManager.gameBoard["Player1"][0].FirstShot;
+            int? second = bowlingManager.gameBoard["Player1"][0].SecondShot;
+            Assert.AreEqual(9, first);
+            Assert.AreEqual(1, second);
+        }
+
         [Test]
         public void GetStanding_TestGameNotFinished_ShouldReturnException()
         {
@@ -176,32 +204,81 @@ namespace BowlingTests
             });
         }
 
+
+
         [Test]
-        public void GetStanding_TestResult()
+        public void GetStanding_TestScores_AllStrikes()
         {
             //Arrange
             //Act
             bowlingManager.GameStarted = false;
             var Players = new List<string>()
             {
-                "A",
-                "B",
-                "C",
+                "Player1",
+                "Player2",
+                "Player3",
             };
-            bowlingManager.SetPlayerAndFrames(3, Players);
-            bowlingManager.StartShoots();
 
+            bowlingManager.StartGame(Players);
+
+            while (bowlingManager.GameStarted)
+            {
+                bowlingManager.NextShot(10);
+            }
+            
             var result = bowlingManager.GetStanding().ToList();
 
-            for (int i = 1; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
-                var first = result[i - 1].TotalScore;
-                var next = result[i].TotalScore;
-
-                Assert.IsTrue(first < next, "The standing is not ordered right.");
+                Assert.AreEqual(60, result[i].TotalScore);
             }
         }
 
-        
+
+        [Test]
+        public void GetStanding_TestScores_AllTheSame()
+        {
+            //Arrange
+            //Act
+            bowlingManager.GameStarted = false;
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                "Player3",
+            };
+
+            bowlingManager.StartGame(Players);
+
+
+            //first round
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            //second round
+            bowlingManager.NextShot(9);
+            bowlingManager.NextShot(1);
+            bowlingManager.NextShot(9);
+            bowlingManager.NextShot(1);
+            bowlingManager.NextShot(9);
+            bowlingManager.NextShot(1);
+            //third round
+            bowlingManager.NextShot(5);
+            bowlingManager.NextShot(5);
+            bowlingManager.NextShot(5);
+            bowlingManager.NextShot(5);
+            bowlingManager.NextShot(5);
+            bowlingManager.NextShot(5);
+
+            //extra
+            bowlingManager.NextShot(5);
+
+            var result = bowlingManager.GetStanding().ToList();
+
+            Assert.AreEqual(45, result[0].TotalScore);
+            Assert.AreEqual(45, result[1].TotalScore);
+            Assert.AreEqual(45, result[2].TotalScore);
+        }
+
     }
 }
