@@ -7,8 +7,8 @@ namespace BowlingLibrary
 {
     public class BowlingManager : IBowlingManager
     {
-        public int framesNumber { get; set; }
-        public bool GameStarted { get; set; }
+        private int framesNumber { get; set; }
+        private bool GameStarted { get; set; } 
 
         public Dictionary<string, List<Frame>> gameBoard { get; set; }
 
@@ -23,9 +23,14 @@ namespace BowlingLibrary
 
         public void StartGame(IEnumerable<string> playerNames)
         {
+            if (this.GameStarted)
+            {
+                throw new GameStateException("Game already started.");
+            }
+
             ValidatePlayers(playerNames);
 
-            SetPlayerAndFrames(framesNumber, playerNames); //metoda de setare player si frame-uri - apelare
+            SetPlayerAndFrames(framesNumber, playerNames);
 
             this.GameStarted = true;
         }
@@ -63,7 +68,6 @@ namespace BowlingLibrary
 
 
 
-
         public void NextShot(int pins)
         {
             if (!this.GameStarted)
@@ -71,14 +75,20 @@ namespace BowlingLibrary
                 throw new GameStateException("Game not started.");
             }
 
-            if ((pins < 1) || (pins > maximShot))
+            if ((pins < 0) || (pins > maximShot))
             {
                 throw new PinsNumberException("Invalid number of pins.");
             }
 
+            SavePins(pins);
+        }
+
+        public void SavePins(int pins)
+        {
             bool saved = false;
 
-            foreach (var framesList in gameBoard.Values)//fiecare lista a unui jucator = ture
+            
+            foreach (var framesList in gameBoard.Values)
             {
                 if (framesList[frameOrderNumber].FirstShot == null)
                 {
@@ -100,9 +110,8 @@ namespace BowlingLibrary
                     framesList[frameOrderNumber].SaveSecondShot(pins);
                     saved = true;
                     maximShot = 10;
-                    //daca e ultima tura -> frame list e ultima
-
-                    //checked last
+                    //daca e ultima tura -> frame list e ultima - checked last
+                   
                     break;
                 }
             }
@@ -110,8 +119,8 @@ namespace BowlingLibrary
             if (!saved)
             {
                 if (frameOrderNumber == framesNumber - 1)
-                { 
-                    this.GameStarted = false; //stop Game
+                {
+                    this.GameStarted = false;
                 }
                 else
                 {
@@ -120,7 +129,7 @@ namespace BowlingLibrary
                 }
             }
         }
-    
+
         public IEnumerable<IPlayer> GetStanding()
         {
             if (this.GameStarted)

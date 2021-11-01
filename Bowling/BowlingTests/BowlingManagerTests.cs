@@ -112,7 +112,7 @@ namespace BowlingTests
         {
             //Arrange
             //Act
-            bowlingManager.GameStarted = false;
+            var bowlingManager1 = new BowlingManager(3);
 
             //Assert
             Assert.Throws<GameStateException>(() =>
@@ -126,7 +126,14 @@ namespace BowlingTests
         {
             //Arrange
             //Act
-            bowlingManager.GameStarted = true;
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                "Player3",
+            };
+
+            bowlingManager.StartGame(Players);
 
             Assert.Throws<PinsNumberException>(() =>
             {
@@ -140,14 +147,14 @@ namespace BowlingTests
         public void NextShot_Save()
         {
             //Arrange
-            bowlingManager.GameStarted = true;
-
             var Players = new List<string>()
             {
                 "Player1",
                 "Player2",
                 "Player3",
             };
+
+            bowlingManager.StartGame(Players);
             bowlingManager.SetPlayerAndFrames(3, Players);
 
             var list = bowlingManager.gameBoard["Player1"];
@@ -169,18 +176,18 @@ namespace BowlingTests
         public void NextShot_Save2()
         {
             //Arrange
-            bowlingManager.GameStarted = true;
-
             var Players = new List<string>()
             {
                 "Player1",
                 "Player2",
                 "Player3",
             };
+
+            bowlingManager.StartGame(Players);
             bowlingManager.SetPlayerAndFrames(3, Players);
 
             //Act
-            bowlingManager.StartGame(Players);
+            
             bowlingManager.NextShot(9);
             bowlingManager.NextShot(1);
 
@@ -195,7 +202,14 @@ namespace BowlingTests
         {
             //Arrange
             //Act
-            bowlingManager.GameStarted = true;
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                "Player3",
+            };
+
+            bowlingManager.StartGame(Players);
 
             //Assert
             Assert.Throws<GameStateException>(() =>
@@ -211,7 +225,7 @@ namespace BowlingTests
         {
             //Arrange
             //Act
-            bowlingManager.GameStarted = false;
+
             var Players = new List<string>()
             {
                 "Player1",
@@ -221,12 +235,27 @@ namespace BowlingTests
 
             bowlingManager.StartGame(Players);
 
-            while (bowlingManager.GameStarted)
+            
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+
+            Assert.Throws<GameStateException>(() =>
             {
                 bowlingManager.NextShot(10);
-            }
-            
+            });
+
+
             var result = bowlingManager.GetStanding().ToList();
+
+            
 
             for (int i = 0; i < 3; i++)
             {
@@ -240,7 +269,7 @@ namespace BowlingTests
         {
             //Arrange
             //Act
-            bowlingManager.GameStarted = false;
+            
             var Players = new List<string>()
             {
                 "Player1",
