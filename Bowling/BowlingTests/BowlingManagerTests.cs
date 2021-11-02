@@ -85,8 +85,6 @@ namespace BowlingTests
                 "Player3",
             };
 
-            //Act
-            //Assert
             Assert.DoesNotThrow(() => bowlingManager.ValidatePlayers(Players));
         }
 
@@ -197,6 +195,42 @@ namespace BowlingTests
             Assert.AreEqual(1, second);
         }
 
+
+        [Test]
+        public void NextShot_TestFinishGame()
+        {
+            //Arrange
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+            };
+
+            //Act
+            bowlingManager.StartGame(Players);
+            bowlingManager.SetPlayerAndFrames(3, Players);
+
+            
+            //1st
+            bowlingManager.NextShot(9);
+            bowlingManager.NextShot(1);
+            bowlingManager.NextShot(10);
+            //2nd
+            bowlingManager.NextShot(9);
+            bowlingManager.NextShot(1);
+            bowlingManager.NextShot(10);
+            //3rd
+            bowlingManager.NextShot(9);
+            bowlingManager.NextShot(1);
+            bowlingManager.NextShot(0);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(2);
+            bowlingManager.NextShot(2);
+
+            Assert.DoesNotThrow(() => bowlingManager.GetStanding());
+        }
+
+
         [Test]
         public void GetStanding_TestGameNotFinished_ShouldReturnException()
         {
@@ -224,8 +258,6 @@ namespace BowlingTests
         public void GetStanding_TestScores_AllStrikes()
         {
             //Arrange
-            //Act
-
             var Players = new List<string>()
             {
                 "Player1",
@@ -233,10 +265,17 @@ namespace BowlingTests
                 "Player3",
             };
 
+            //Act
             bowlingManager.StartGame(Players);
 
-            
             bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+
             bowlingManager.NextShot(10);
             bowlingManager.NextShot(10);
             bowlingManager.NextShot(10);
@@ -252,14 +291,11 @@ namespace BowlingTests
                 bowlingManager.NextShot(10);
             });
 
-
             var result = bowlingManager.GetStanding().ToList();
-
-            
 
             for (int i = 0; i < 3; i++)
             {
-                Assert.AreEqual(60, result[i].TotalScore);
+                Assert.AreEqual(90, result[i].TotalScore);
             }
         }
 
@@ -268,8 +304,6 @@ namespace BowlingTests
         public void GetStanding_TestScores_AllTheSame()
         {
             //Arrange
-            //Act
-            
             var Players = new List<string>()
             {
                 "Player1",
@@ -277,8 +311,8 @@ namespace BowlingTests
                 "Player3",
             };
 
+            //Act
             bowlingManager.StartGame(Players);
-
 
             //first round
             bowlingManager.NextShot(10);
@@ -299,14 +333,16 @@ namespace BowlingTests
             bowlingManager.NextShot(5);
             bowlingManager.NextShot(5);
 
-            //extra
             bowlingManager.NextShot(5);
+            bowlingManager.NextShot(5);
+            bowlingManager.NextShot(5);
+
 
             var result = bowlingManager.GetStanding().ToList();
 
-            Assert.AreEqual(45, result[0].TotalScore);
-            Assert.AreEqual(45, result[1].TotalScore);
-            Assert.AreEqual(45, result[2].TotalScore);
+            Assert.AreEqual(50, result[0].TotalScore);
+            Assert.AreEqual(50, result[1].TotalScore);
+            Assert.AreEqual(50, result[2].TotalScore);
         }
 
 
@@ -314,8 +350,7 @@ namespace BowlingTests
         [Test]
         public void GetStanding_TestScores_AllDifferent()
         {
-
-            BowlingManager bowlingManager2 = new BowlingManager(9);
+            BowlingManager bowlingManager2 = new BowlingManager(10);
             //Arrange
             //Act
 
@@ -323,11 +358,9 @@ namespace BowlingTests
             {
                 "Player1",
                 "Player2",
-                //"Player3",
             };
 
             bowlingManager2.StartGame(Players);
-
 
             //1st
             bowlingManager2.NextShot(9);
@@ -366,16 +399,166 @@ namespace BowlingTests
             bowlingManager2.NextShot(3);
             bowlingManager2.NextShot(1);
             bowlingManager2.NextShot(1);
-
-            //extra
-            bowlingManager2.NextShot(5);
+            //10th
+            bowlingManager2.NextShot(0);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(0);
+            bowlingManager2.NextShot(1);
 
             var result = bowlingManager2.GetStanding().ToList();
 
-            Assert.AreEqual(116, result[0].TotalScore);
-            Assert.AreEqual(184, result[1].TotalScore);
-            //Assert.AreEqual(45, result[2].TotalScore);
+            Assert.AreEqual(117, result[0].TotalScore);
+            Assert.AreEqual(185, result[1].TotalScore);
         }
+
+
+        [Test]
+        public void GetStanding_TestScores_TwoPlayers_DifferentShoots()
+        {
+            //Arrange
+            BowlingManager bowlingManager2 = new BowlingManager(9);
+            
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+            };
+
+            //Act
+            bowlingManager2.StartGame(Players);
+
+            //1st
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(10);
+            //2nd
+            bowlingManager2.NextShot(9);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(9);
+            bowlingManager2.NextShot(1);
+            //3rd
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(5);
+            //4th
+            bowlingManager2.NextShot(7);
+            bowlingManager2.NextShot(2);
+            bowlingManager2.NextShot(7);
+            bowlingManager2.NextShot(1);
+            //5th
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(10);
+            //6th
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(10);
+            //7th
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(10);
+            //8th
+            bowlingManager2.NextShot(9);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(9);
+            bowlingManager2.NextShot(1);
+            //9th
+            bowlingManager2.NextShot(8);
+            bowlingManager2.NextShot(2);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(8);
+            bowlingManager2.NextShot(2);
+            bowlingManager2.NextShot(1);
+
+            var result = bowlingManager2.GetStanding().ToList();
+
+            Assert.AreEqual(168, result[0].TotalScore);
+            Assert.AreEqual(169, result[1].TotalScore);
+        }
+
+
+        [Test]
+        public void SaveLast_Test()
+        {
+            //Arrange
+            BowlingManager bowlingManager2 = new BowlingManager(3);
+
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+            };
+
+            bowlingManager2.StartGame(Players);
+            LastFrame lastFrame = new LastFrame();
+
+            lastFrame.FirstShot = 7;
+            lastFrame.SecondShot = 3;
+            //Act
+            //bowlingManager2.SaveLast(5, lastFrame);
+            //1st
+            bowlingManager2.NextShot(10);
+            bowlingManager2.NextShot(10);
+            //2nd
+            bowlingManager2.NextShot(9);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(9);
+            bowlingManager2.NextShot(1);
+            //3rd
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(1);
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(5);
+            bowlingManager2.NextShot(5);
+
+            var thirdShot = (bowlingManager2.gameBoard["Player2"][2] as LastFrame).ThirdShot;
+
+            //Assert
+            Assert.AreEqual(5, thirdShot);
+        }
+
+
+        [Test]
+        public void GetStanding_TestScores_3PlayersStrikeVariants()
+        {
+            //Arrange
+            var Players = new List<string>()
+            {
+                "Player1",
+                "Player2",
+                "Player3",
+            };
+
+            //Act
+            bowlingManager.StartGame(Players);
+
+            //first round
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            //second round
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            //third round
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(1);
+
+            bowlingManager.NextShot(10);
+            bowlingManager.NextShot(1);
+            bowlingManager.NextShot(9);
+
+            bowlingManager.NextShot(1);
+            bowlingManager.NextShot(9);
+            bowlingManager.NextShot(1);
+
+
+            var result = bowlingManager.GetStanding().ToList();
+
+            Assert.AreEqual(52, result[0].TotalScore);
+            Assert.AreEqual(71, result[1].TotalScore);
+            Assert.AreEqual(81, result[2].TotalScore);
+        }
+
 
     }
 }

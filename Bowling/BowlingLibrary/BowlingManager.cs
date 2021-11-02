@@ -56,10 +56,11 @@ namespace BowlingLibrary
             foreach (string p in playerNames)
             {
                 var frames = new List<Frame>();
-                for (int i = 1; i <= framesNumber; i++)
+                for (int i = 1; i < framesNumber; i++)
                 {
                     frames.Add(new Frame());
                 }
+                frames.Add(new LastFrame());
 
                 //implement last shot
                 gameBoard.Add(p, frames);
@@ -87,48 +88,68 @@ namespace BowlingLibrary
         {
             bool saved = false;
 
-            
-            foreach (var framesList in gameBoard.Values)
+            string last = gameBoard.Keys.Last();
+
+            foreach (var framesList in gameBoard)
             {
-                if (framesList[frameOrderNumber].FirstShot == null)
+                if (framesList.Value[frameOrderNumber].FirstShot == null)
                 {
-                    framesList[frameOrderNumber].SaveFirstShot(pins);
+                    framesList.Value[frameOrderNumber].SaveFirstShot(pins);
                     saved = true;
 
-                    if (pins == 10)
-                    {
-                        framesList[frameOrderNumber].SaveSecondShot(0);
-                    }
-                    else
-                    {
+                    if (pins != 10)
+                    { 
                         maximShot = 10 - pins;
                     }
                     break;
                 }
-                else if (framesList[frameOrderNumber].SecondShot == null)
+
+                else if (framesList.Value[frameOrderNumber].SecondShot == null)
                 {
-                    framesList[frameOrderNumber].SaveSecondShot(pins);
+                    framesList.Value[frameOrderNumber].SaveSecondShot(pins);
                     saved = true;
                     maximShot = 10;
-                    //daca e ultima tura -> frame list e ultima - checked last
-                   
+
                     break;
                 }
+
+                else if(frameOrderNumber == framesNumber - 1 && (framesList.Value[frameOrderNumber] as LastFrame).ThirdShot  == null)//if last turn and first 2 shots already saved
+                {
+                    SaveLast(pins, framesList.Value[frameOrderNumber]);
+                    
+                    saved = true;
+                    break;
+                }
+                
             }
 
-            if (!saved)
+            if((gameBoard[last][framesNumber - 1] as LastFrame).ThirdShot != null)
             {
-                if (frameOrderNumber == framesNumber - 1)
-                {
-                    this.GameStarted = false;
-                }
-                else
-                {
+                this.GameStarted = false;
+            }
+            else if (!saved /*&& this.GameStarted*/)
+            {
                     frameOrderNumber++;
                     NextShot(pins);
-                }
             }
         }
+
+
+        private void SaveLast(int pins, IFrame lastFrame)
+        {
+            //daca suma <10 - 0
+            if(lastFrame.shotsSum()<10)
+            {
+                (lastFrame as LastFrame).ThirdShot = 0;
+            }
+            else
+            {
+                (lastFrame as LastFrame).ThirdShot = pins;
+            }
+        }
+        
+
+
 
         public IEnumerable<IPlayer> GetStanding()
         {
@@ -144,22 +165,24 @@ namespace BowlingLibrary
             {
                 int countDouble = 0;
                 int? currentFrameScore = 0;
-                for (int i = 0; i < framesNumber; i++)
+                for (int i = 0; i <= framesNumber-1; i++)
                 {
-                    
-                    if (gameBoard[i].isStrike())
+
+                    if (gameBoard[i].isStrike() && (i != framesNumber - 1)) //not last frame
                     {
-                        countDouble = countDouble<3 ? countDouble+1 : countDouble;
+                        countDouble = countDouble < 3 ? countDouble + 1 : countDouble;
                         currentFrameScore += 10 * countDouble;
+
                     }
                     else
                     {
                         currentFrameScore += gameBoard[i].shotsSum();
 
-                        if (countDouble != 0) {
+                        if (countDouble != 0)
+                        {
                             currentFrameScore += gameBoard[i].shotsSum();
 
-                            if (i>1 && countDouble > 1)
+                            if (i > 1 && countDouble > 1)
                             {
                                 currentFrameScore += gameBoard[i].FirstShot;
                             }
@@ -172,8 +195,13 @@ namespace BowlingLibrary
                     {
                         currentFrameScore += gameBoard[i].FirstShot;
                     }
-                    
+
+                    if (i == framesNumber-1) //e ultimul frame
+                    {
+                        currentFrameScore = currentFrameScore + (gameBoard[i] as LastFrame).ThirdShot;
+                    }
                 }
+
 
                 playersScoreList.Add(new Player(key, currentFrameScore));
             }

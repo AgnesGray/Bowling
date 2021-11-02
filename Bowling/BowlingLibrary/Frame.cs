@@ -29,15 +29,20 @@ namespace BowlingLibrary
         }
 
         
-        public void SaveFirstShot(int pins)
+        public virtual void SaveFirstShot(int pins)
         {
             if (FirstShot == null)
             {
                 FirstShot = pins;
             }
+
+            if (pins == 10)
+            {
+                SecondShot = 0;
+            }
         }
 
-        public void SaveSecondShot(int pins)
+        public virtual void SaveSecondShot(int pins)
         {
             if (SecondShot == null && FirstShot != null)
             {
