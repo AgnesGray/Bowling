@@ -23,14 +23,14 @@ namespace BowlingTests
         [Test]
         public void isStrike_TestReturn_False()
         {
-            frame.FirstShot = 8;
+            frame.SaveFirstShot(8);
             Assert.IsFalse(frame.IsStrike());
         }
 
         [Test]
         public void isStrike_TestReturn_True()
         {
-            frame.FirstShot = 10;
+            frame.SaveFirstShot(10);
             Assert.IsTrue(frame.IsStrike());
         }
 
@@ -38,16 +38,16 @@ namespace BowlingTests
         [Test]
         public void isSpare_TestReturn_False()
         {
-            frame.FirstShot = 0;
-            frame.SecondShot = 8;
+            frame.SaveFirstShot(0);
+            frame.SaveSecondShot(8);
             Assert.IsFalse(frame.IsSpare());
         }
 
         [Test]
         public void isSpare_TestReturn_True()
         {
-            frame.FirstShot = 2;
-            frame.SecondShot = 8;
+            frame.SaveFirstShot(2);
+            frame.SaveSecondShot (8);
             Assert.IsTrue(frame.IsSpare());
         }
 
@@ -62,7 +62,7 @@ namespace BowlingTests
         [Test]
         public void SaveFirstShot_Test_NotSave()
         {
-            frame.FirstShot = 2;
+            frame.SaveFirstShot(2);
             frame.SaveFirstShot(5);
             Assert.AreEqual(2, frame.FirstShot);
         }
@@ -71,7 +71,7 @@ namespace BowlingTests
         [Test]
         public void SaveSecondShot_Test_Save()
         {
-            frame.FirstShot = 1;
+            frame.SaveFirstShot(1);
             frame.SaveSecondShot(5);
             Assert.AreEqual(5, frame.SecondShot);
         }
@@ -79,7 +79,7 @@ namespace BowlingTests
         [Test]
         public void SaveSecondShot_Test_NotSave()
         {
-            frame.FirstShot = null;
+            //frame.FirstShot = null;
             frame.SaveFirstShot(5);
             Assert.AreEqual(null, frame.SecondShot);
         }
