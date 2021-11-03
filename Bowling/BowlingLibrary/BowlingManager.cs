@@ -15,12 +15,14 @@ namespace BowlingLibrary
         protected int frameOrderNumber = 0;
         protected int maximShot = 10;
 
+
         public BowlingManager(int frames)
         {
             framesNumber = frames;
             this.GameStarted = false;
             gameBoard = new Dictionary<string, List<Frame>>();
         }
+
 
         public void StartGame(IEnumerable<string> playerNames)
         {
@@ -52,8 +54,6 @@ namespace BowlingLibrary
 
         public void SetPlayerAndFrames(int framesNumber, IEnumerable<string> playerNames)
         {
-            //gameBoard = new Dictionary<string, List<Frame>>();
-
             foreach (string p in playerNames)
             {
                 var frames = new List<Frame>();
@@ -67,7 +67,6 @@ namespace BowlingLibrary
                 this.gameBoard.Add(p, frames);
             }
         }
-
 
 
         public void NextShot(int pins)
@@ -202,7 +201,6 @@ namespace BowlingLibrary
                         currentFrameScore = currentFrameScore + (gameBoard[i] as LastFrame).ThirdShot;
                     }
                 }
-
 
                 playersScoreList.Add(new Player(key, currentFrameScore));
             }
