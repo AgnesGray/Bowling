@@ -90,11 +90,11 @@ namespace BowlingLibrary
 
             string last = gameBoard.Keys.Last();
 
-            foreach (var framesList in gameBoard)
+            foreach (var framesList in gameBoard.Values)
             {
-                if (framesList.Value[frameOrderNumber].FirstShot == null)
+                if (framesList[frameOrderNumber].FirstShot == null)
                 {
-                    framesList.Value[frameOrderNumber].SaveFirstShot(pins);
+                    framesList[frameOrderNumber].SaveFirstShot(pins);
                     saved = true;
 
                     if (pins != 10)
@@ -104,18 +104,18 @@ namespace BowlingLibrary
                     break;
                 }
 
-                else if (framesList.Value[frameOrderNumber].SecondShot == null)
+                else if (framesList[frameOrderNumber].SecondShot == null)
                 {
-                    framesList.Value[frameOrderNumber].SaveSecondShot(pins);
+                    framesList[frameOrderNumber].SaveSecondShot(pins);
                     saved = true;
                     maximShot = 10;
 
                     break;
                 }
 
-                else if(frameOrderNumber == framesNumber - 1 && (framesList.Value[frameOrderNumber] as LastFrame).ThirdShot  == null)//if last turn and first 2 shots already saved
+                else if(frameOrderNumber == framesNumber - 1 && (framesList[frameOrderNumber] as LastFrame).ThirdShot  == null)//if last turn and first 2 shots already saved
                 {
-                    SaveLast(pins, framesList.Value[frameOrderNumber]);
+                    SaveLast(pins, framesList[frameOrderNumber]);
                     
                     saved = true;
                     break;

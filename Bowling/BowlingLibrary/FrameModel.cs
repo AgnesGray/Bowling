@@ -6,8 +6,8 @@ namespace BowlingLibrary
 {
     public abstract class FrameModel
     {
-        public int? FirstShot { get; set; }
-        public int? SecondShot { get; set; }
+        private int? FirstShot { get; set; }
+        private int? SecondShot { get; set; }
 
 
         public bool isStrike()
