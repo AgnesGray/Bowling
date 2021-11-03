@@ -24,14 +24,14 @@ namespace BowlingTests
         public void isStrike_TestReturn_False()
         {
             frame.FirstShot = 8;
-            Assert.IsFalse(frame.isStrike());
+            Assert.IsFalse(frame.IsStrike());
         }
 
         [Test]
         public void isStrike_TestReturn_True()
         {
             frame.FirstShot = 10;
-            Assert.IsTrue(frame.isStrike());
+            Assert.IsTrue(frame.IsStrike());
         }
 
         
@@ -40,7 +40,7 @@ namespace BowlingTests
         {
             frame.FirstShot = 0;
             frame.SecondShot = 8;
-            Assert.IsFalse(frame.isSpare());
+            Assert.IsFalse(frame.IsSpare());
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace BowlingTests
         {
             frame.FirstShot = 2;
             frame.SecondShot = 8;
-            Assert.IsTrue(frame.isSpare());
+            Assert.IsTrue(frame.IsSpare());
         }
 
 

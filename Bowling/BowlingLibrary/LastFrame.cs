@@ -15,7 +15,7 @@ namespace BowlingLibrary
                 SecondShot = pins;//pins <= 10 - FirstShot
             }
 
-            if (this.shotsSum() < 10)
+            if (this.ShotsSum() < 10)
             {
                 ThirdShot = 0;
             }

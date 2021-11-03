@@ -9,10 +9,10 @@ namespace BowlingLibrary
         public int? FirstShot { get; set; }
         public int? SecondShot { get; set; }
 
-        public bool isStrike();
-        public bool isSpare();
+        public bool IsStrike();
+        public bool IsSpare();
         public void SaveFirstShot(int pins);
         public void SaveSecondShot(int pins);
-        public int? shotsSum();
+        public int? ShotsSum();
     }
 }

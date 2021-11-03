@@ -10,7 +10,7 @@ namespace BowlingLibrary
         public int? SecondShot { get; set; }
 
 
-        public bool isStrike()
+        public bool IsStrike()
         {
             if (FirstShot == 10)
                 return true;
@@ -18,11 +18,11 @@ namespace BowlingLibrary
                 return false;
         }
 
-        public bool isSpare()
+        public bool IsSpare()
         {
             int? TotalPins = FirstShot + SecondShot;
 
-            if (TotalPins == 10 && !isStrike())
+            if (TotalPins == 10 && !IsStrike())
                 return true;
             else
                 return false;
@@ -50,7 +50,7 @@ namespace BowlingLibrary
             }
         }
 
-        public int? shotsSum()
+        public int? ShotsSum()
         {
             return this.FirstShot + this.SecondShot;
         }

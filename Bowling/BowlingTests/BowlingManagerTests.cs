@@ -10,20 +10,12 @@ namespace BowlingTests
     public class BowlingManagerTests
     {
 
-        private IBowlingManager bowlingManager;
-
-        [SetUp]
-        public void MainSetup()
-        {
-            bowlingManager = new BowlingManager(3);
-        }
-
-
         [Test]
         public void ValidatePlayerNames_LessThenTwo_Exception() //should return exception
         {
             //Arrange
             var Players = new List<string>();
+            BowlingManager bowlingManager = new BowlingManager(3);
 
             //Act
             //Assert
@@ -47,6 +39,7 @@ namespace BowlingTests
                 "Player7",
                 "Player8",
             };
+            BowlingManager bowlingManager = new BowlingManager(3);
 
             //Act
             //Assert
@@ -65,6 +58,7 @@ namespace BowlingTests
                 "Player2",
                 "Player1",
             };
+            BowlingManager bowlingManager = new BowlingManager(3);
 
             //Act
             //Assert
@@ -73,7 +67,6 @@ namespace BowlingTests
                 bowlingManager.ValidatePlayers(Players);
             });
         }
-
 
         [Test]
         public void ValidatePlayerNames_NamesUnique() //should return exception
@@ -84,9 +77,11 @@ namespace BowlingTests
                 "Player2",
                 "Player3",
             };
+            BowlingManager bowlingManager = new BowlingManager(3);
 
             Assert.DoesNotThrow(() => bowlingManager.ValidatePlayers(Players));
         }
+
 
 
         [Test]
@@ -98,19 +93,19 @@ namespace BowlingTests
                 "Player2",
                 "Player3",
             };
+            BowlingManager bowlingManager = new BowlingManager(3);
             bowlingManager.SetPlayerAndFrames(3, Players);
             Assert.Pass();
         }
 
         
 
-        //method NextShot(int pils) - receives a value between 0 and 9 which represents how many pils are hit in a turn.       
         [Test]
         public void NextShot_GameNotStarted_Exception()
         {
             //Arrange
             //Act
-            var bowlingManager1 = new BowlingManager(3);
+            var bowlingManager = new BowlingManager(3);
 
             //Assert
             Assert.Throws<GameStateException>(() =>
@@ -123,23 +118,23 @@ namespace BowlingTests
         public void NextShot_InvalidPinsNumber_Exception()
         {
             //Arrange
-            //Act
             var Players = new List<string>()
             {
                 "Player1",
                 "Player2",
                 "Player3",
             };
+            BowlingManager bowlingManager = new BowlingManager(3);
 
+            //Act
             bowlingManager.StartGame(Players);
 
+            //Assert
             Assert.Throws<PinsNumberException>(() =>
             {
                 bowlingManager.NextShot(12);
             });
         }
-
-
 
         [Test]
         public void NextShot_Save()
@@ -152,8 +147,10 @@ namespace BowlingTests
                 "Player3",
             };
 
+            BowlingManager bowlingManager = new BowlingManager(3);
+
             bowlingManager.StartGame(Players);
-            bowlingManager.SetPlayerAndFrames(3, Players);
+            //bowlingManager.SetPlayerAndFrames(3, Players);
 
             var list = bowlingManager.gameBoard["Player1"];
 
@@ -166,9 +163,8 @@ namespace BowlingTests
             int? afterShotValue = list[0].FirstShot;
             Assert.AreEqual(10, afterShotValue);
             Assert.AreEqual(0, list[0].SecondShot);
-            Assert.IsTrue(list[0].isStrike());
+            Assert.IsTrue(list[0].IsStrike());
         }
-
 
         [Test]
         public void NextShot_Save2()
@@ -180,21 +176,19 @@ namespace BowlingTests
                 "Player2",
                 "Player3",
             };
-
+            BowlingManager bowlingManager = new BowlingManager(3);
             bowlingManager.StartGame(Players);
-            bowlingManager.SetPlayerAndFrames(3, Players);
-
-            //Act
             
+            //Act
             bowlingManager.NextShot(9);
             bowlingManager.NextShot(1);
-
             int? first = bowlingManager.gameBoard["Player1"][0].FirstShot;
             int? second = bowlingManager.gameBoard["Player1"][0].SecondShot;
+
+            //Assert
             Assert.AreEqual(9, first);
             Assert.AreEqual(1, second);
         }
-
 
         [Test]
         public void NextShot_TestFinishGame()
@@ -205,12 +199,11 @@ namespace BowlingTests
                 "Player1",
                 "Player2",
             };
+            BowlingManager bowlingManager = new BowlingManager(3);
 
             //Act
             bowlingManager.StartGame(Players);
-            bowlingManager.SetPlayerAndFrames(3, Players);
 
-            
             //1st
             bowlingManager.NextShot(9);
             bowlingManager.NextShot(1);
@@ -231,18 +224,18 @@ namespace BowlingTests
         }
 
 
+
         [Test]
         public void GetStanding_TestGameNotFinished_ShouldReturnException()
         {
             //Arrange
-            //Act
             var Players = new List<string>()
             {
                 "Player1",
                 "Player2",
                 "Player3",
             };
-
+            BowlingManager bowlingManager = new BowlingManager(3);
             bowlingManager.StartGame(Players);
 
             //Assert
@@ -251,8 +244,6 @@ namespace BowlingTests
                 bowlingManager.GetStanding();
             });
         }
-
-
 
         [Test]
         public void GetStanding_TestScores_AllStrikes()
@@ -264,6 +255,7 @@ namespace BowlingTests
                 "Player2",
                 "Player3",
             };
+            BowlingManager bowlingManager = new BowlingManager(3);
 
             //Act
             bowlingManager.StartGame(Players);
@@ -299,7 +291,6 @@ namespace BowlingTests
             }
         }
 
-
         [Test]
         public void GetStanding_TestScores_AllTheSame()
         {
@@ -310,6 +301,7 @@ namespace BowlingTests
                 "Player2",
                 "Player3",
             };
+            BowlingManager bowlingManager = new BowlingManager(3);
 
             //Act
             bowlingManager.StartGame(Players);
@@ -344,8 +336,6 @@ namespace BowlingTests
             Assert.AreEqual(50, result[1].TotalScore);
             Assert.AreEqual(50, result[2].TotalScore);
         }
-
-
 
         [Test]
         public void GetStanding_TestScores_AllDifferent()
@@ -410,7 +400,6 @@ namespace BowlingTests
             Assert.AreEqual(117, result[0].TotalScore);
             Assert.AreEqual(185, result[1].TotalScore);
         }
-
 
         [Test]
         public void GetStanding_TestScores_TwoPlayers_DifferentShoots()
@@ -485,14 +474,10 @@ namespace BowlingTests
                 "Player1",
                 "Player2",
             };
-
             bowlingManager2.StartGame(Players);
-            LastFrame lastFrame = new LastFrame();
-
-            lastFrame.FirstShot = 7;
-            lastFrame.SecondShot = 3;
+            
             //Act
-            //bowlingManager2.SaveLast(5, lastFrame);
+
             //1st
             bowlingManager2.NextShot(10);
             bowlingManager2.NextShot(10);
@@ -515,7 +500,6 @@ namespace BowlingTests
             Assert.AreEqual(5, thirdShot);
         }
 
-
         [Test]
         public void GetStanding_TestScores_3PlayersStrikeVariants()
         {
@@ -526,6 +510,7 @@ namespace BowlingTests
                 "Player2",
                 "Player3",
             };
+            BowlingManager bowlingManager = new BowlingManager(3);
 
             //Act
             bowlingManager.StartGame(Players);
@@ -558,7 +543,5 @@ namespace BowlingTests
             Assert.AreEqual(71, result[1].TotalScore);
             Assert.AreEqual(81, result[2].TotalScore);
         }
-
-
     }
 }
