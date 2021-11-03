@@ -6,8 +6,8 @@ namespace BowlingLibrary
 {
     public interface IFrame
     {
-        public int? FirstShot { get; set; }
-        public int? SecondShot { get; set; }
+        public int? FirstShot { get; }
+        public int? SecondShot { get; }
 
         public bool IsStrike();
         public bool IsSpare();

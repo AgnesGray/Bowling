@@ -8,7 +8,7 @@ namespace BowlingLibrary
     {
         public string Name { get; set; }
 
-        public int? TotalScore { get; set; }
+        public int? TotalScore { get; }
 
         public Player(string Name, int? TotalScore)
         {
