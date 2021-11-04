@@ -8,7 +8,7 @@ namespace BowlingLibrary
     public class BowlingManager : IBowlingManager
     {
         private int framesNumber { get; set; }
-        private bool GameStarted { get; set; } 
+        private bool GameStarted { get; set; }
 
         public Dictionary<string, List<Frame>> gameBoard { get; }
 
@@ -98,7 +98,7 @@ namespace BowlingLibrary
                     saved = true;
 
                     if (pins != 10)
-                    { 
+                    {
                         maximShot = 10 - pins;
                     }
                     break;
@@ -113,24 +113,24 @@ namespace BowlingLibrary
                     break;
                 }
 
-                else if(frameOrderNumber == framesNumber - 1 && (framesList[frameOrderNumber] as LastFrame).ThirdShot  == null)//if last turn and first 2 shots already saved
+                else if (frameOrderNumber == framesNumber - 1 && (framesList[frameOrderNumber] as LastFrame).ThirdShot == null)//if last turn and first 2 shots already saved
                 {
                     SaveLast(pins, framesList[frameOrderNumber]);
-                    
+
                     saved = true;
                     break;
                 }
-                
+
             }
 
-            if((gameBoard[last][framesNumber - 1] as LastFrame).ThirdShot != null)
+            if ((gameBoard[last][framesNumber - 1] as LastFrame).ThirdShot != null)
             {
                 this.GameStarted = false;
             }
             else if (!saved /*&& this.GameStarted*/)
             {
-                    frameOrderNumber++;
-                    NextShot(pins);
+                frameOrderNumber++;
+                NextShot(pins);
             }
         }
 
@@ -138,7 +138,7 @@ namespace BowlingLibrary
         private void SaveLast(int pins, IFrame lastFrame)
         {
             //daca suma <10 - 0
-            if(lastFrame.ShotsSum()<10)
+            if (lastFrame.ShotsSum() < 10)
             {
                 (lastFrame as LastFrame).ThirdShot = 0;
             }
@@ -147,7 +147,7 @@ namespace BowlingLibrary
                 (lastFrame as LastFrame).ThirdShot = pins;
             }
         }
-        
+
 
 
 
@@ -160,54 +160,67 @@ namespace BowlingLibrary
 
             var playersScoreList = new List<IPlayer>();
 
-            
+
             foreach (var (key, gameBoard) in gameBoard)
             {
                 int countDouble = 0;
                 int? currentFrameScore = 0;
-                for (int i = 0; i <= framesNumber-1; i++)
+
+                for (int i = 0; i <= framesNumber - 1; i++)
                 {
-
-                    if (gameBoard[i].IsStrike() && (i != framesNumber - 1)) //not last frame
-                    {
-                        countDouble = countDouble < 3 ? countDouble + 1 : countDouble;
-                        currentFrameScore += 10 * countDouble;
-
-                    }
-                    else
-                    {
-                        currentFrameScore += gameBoard[i].ShotsSum();
-
-                        if (countDouble != 0)
-                        {
-                            currentFrameScore += gameBoard[i].ShotsSum();
-
-                            if (i > 1 && countDouble > 1)
-                            {
-                                currentFrameScore += gameBoard[i].FirstShot;
-                            }
-                        }
-
-                        countDouble = 0;
-                    }
-
-                    if (i > 0 && gameBoard[i - 1].IsSpare())
-                    {
-                        currentFrameScore += gameBoard[i].FirstShot;
-                    }
-
-                    if (i == framesNumber-1) //e ultimul frame
-                    {
-                        currentFrameScore = currentFrameScore + (gameBoard[i] as LastFrame).ThirdShot;
-                    }
+                    (int, int?) currentScoreAndDouble = ComputeScore(gameBoard, i, countDouble, currentFrameScore);
+                    countDouble = currentScoreAndDouble.Item1;
+                    currentFrameScore = currentScoreAndDouble.Item2;
                 }
 
                 playersScoreList.Add(new Player(key, currentFrameScore));
             }
 
             var result = playersScoreList.OrderBy(o => o.TotalScore).ToList();
-            
+
             return result;
         }     
+
+
+        public (int, int?) ComputeScore(List<Frame> Frames, int i, int countDouble, int? currentFrameScore)
+        {
+            if (Frames[i].IsStrike() && (i != framesNumber - 1)) //not last frame
+            {
+                countDouble = countDouble < 3 ? countDouble + 1 : countDouble;
+                currentFrameScore += 10 * countDouble;
+
+            }
+            else
+            {
+                currentFrameScore += Frames[i].ShotsSum();
+
+                if (countDouble != 0)
+                {
+                    currentFrameScore += Frames[i].ShotsSum();
+
+                    if (i > 1 && countDouble > 1)
+                    {
+                        currentFrameScore += Frames[i].FirstShot;
+                    }
+                }
+
+                countDouble = 0;
+            }
+
+            if (i > 0 && Frames[i-1].IsSpare())
+            {
+                currentFrameScore += Frames[i].FirstShot;
+            }
+
+            if (i == framesNumber - 1) //e ultimul frame
+            {
+                currentFrameScore = currentFrameScore + (Frames[i] as LastFrame).ThirdShot;
+            }
+
+            (int, int?) result = (countDouble, currentFrameScore);
+                
+            return result;
+        }
+
     }
 }
