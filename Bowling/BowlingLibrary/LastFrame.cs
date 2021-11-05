@@ -29,12 +29,6 @@ namespace BowlingLibrary
             }
         }
 
-        //public override int? ShotsSum()
-        //{
-            
-        //    return FirstShot + SecondShot + ThirdShot;
-            
-        //}
     }
 
 }
