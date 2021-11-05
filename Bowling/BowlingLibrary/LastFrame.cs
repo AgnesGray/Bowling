@@ -10,12 +10,12 @@ namespace BowlingLibrary
 
         public override void SaveSecondShot(int pins)
         {
-            if (this.SecondShot == null && FirstShot != null)
+            if ( SecondShot == null && FirstShot != null)
             {
-                SecondShot = pins;//pins <= 10 - FirstShot
+                SecondShot = pins;
             }
 
-            if (this.ShotsSum() < 10)
+            if (FirstAndSecondShotsSum() < 10)
             {
                 ThirdShot = 0;
             }
@@ -28,6 +28,13 @@ namespace BowlingLibrary
                 FirstShot = pins;
             }
         }
+
+        //public override int? ShotsSum()
+        //{
+            
+        //    return FirstShot + SecondShot + ThirdShot;
+            
+        //}
     }
 
 }

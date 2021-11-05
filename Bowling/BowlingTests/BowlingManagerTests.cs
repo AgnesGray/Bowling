@@ -20,8 +20,8 @@ namespace BowlingTests
             //Act
             //Assert
             Assert.Throws<PlayersNumberException>(() =>
-            {
-                bowlingManager.ValidatePlayers(Players);
+            { 
+                bowlingManager.StartGame(Players);
             });
         }
 
@@ -45,7 +45,7 @@ namespace BowlingTests
             //Assert
             Assert.Throws<PlayersNumberException>(() =>
             {
-                bowlingManager.ValidatePlayers(Players);
+                bowlingManager.StartGame(Players);
             });
         }
 
@@ -64,7 +64,7 @@ namespace BowlingTests
             //Assert
             Assert.Throws<NamesNotUniqueException>(() =>
             {
-                bowlingManager.ValidatePlayers(Players);
+                bowlingManager.StartGame(Players);
             });
         }
 
@@ -79,26 +79,10 @@ namespace BowlingTests
             };
             BowlingManager bowlingManager = new BowlingManager(3);
 
-            Assert.DoesNotThrow(() => bowlingManager.ValidatePlayers(Players));
+            Assert.DoesNotThrow(() => bowlingManager.StartGame(Players));
         }
 
 
-
-        [Test]
-        public void SetPlayerAndFrames_Test()
-        {
-            var Players = new List<string>()
-            {
-                "Player1",
-                "Player2",
-                "Player3",
-            };
-            BowlingManager bowlingManager = new BowlingManager(3);
-            bowlingManager.SetPlayerAndFrames(3, Players);
-            Assert.Pass();
-        }
-
-        
 
         [Test]
         public void NextShot_GameNotStarted_Exception()

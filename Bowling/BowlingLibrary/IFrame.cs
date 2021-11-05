@@ -13,6 +13,6 @@ namespace BowlingLibrary
         public bool IsSpare();
         public void SaveFirstShot(int pins);
         public void SaveSecondShot(int pins);
-        public int? ShotsSum();
+        public int? FirstAndSecondShotsSum();
     }
 }

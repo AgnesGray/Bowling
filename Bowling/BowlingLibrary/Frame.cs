@@ -50,9 +50,9 @@ namespace BowlingLibrary
             }
         }
 
-        public int? ShotsSum()
+        public virtual int? FirstAndSecondShotsSum()
         {
-            return this.FirstShot + this.SecondShot;
+            return FirstShot + SecondShot;
         }
     }
 }

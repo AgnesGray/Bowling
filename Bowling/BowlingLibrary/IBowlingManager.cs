@@ -10,10 +10,5 @@ namespace BowlingLibrary
         public void NextShot(int pins);
         public IEnumerable<IPlayer> GetStanding();
 
-
-        //new
-        public void ValidatePlayers(IEnumerable<string> players);
-        public void SetPlayerAndFrames(int framesNumber, IEnumerable<string> playerNames);
-        
     }
 }
