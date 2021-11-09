@@ -13,7 +13,7 @@ namespace BowlingLibrary
         {
             if (FirstShot == null)
             {
-                SaveFirstShot(pins);
+                FirstShot = pins;
             }
         }
 
@@ -21,7 +21,7 @@ namespace BowlingLibrary
         {
             if ( SecondShot == null && FirstShot != null)
             {
-                SaveSecondShot(pins);
+                SecondShot = pins;
             }
 
             if (FirstAndSecondShotsSum() < 10)

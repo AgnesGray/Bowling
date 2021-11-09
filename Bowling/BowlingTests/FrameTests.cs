@@ -8,7 +8,7 @@ using BowlingLibrary.Exceptions;
 namespace BowlingTests
 {
     [TestFixture]
-    class FrameTests
+    public class FrameTests
     {
 
         private IFrame frame;

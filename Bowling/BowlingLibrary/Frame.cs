@@ -6,8 +6,8 @@ namespace BowlingLibrary
 {
     public class Frame : IFrame
     {
-        public int? FirstShot { get; private set; }
-        public int? SecondShot { get; private set; }
+        public int? FirstShot { get; protected set; }
+        public int? SecondShot { get; protected set; }
 
 
         public bool IsStrike()
