@@ -22,7 +22,7 @@ namespace BowlingLibrary
         {
             int? TotalPins = FirstShot + SecondShot;
 
-            if (TotalPins == 10 && !IsStrike())
+            if (TotalPins == 10 || !IsStrike())
                 return true;
             else
                 return false;
