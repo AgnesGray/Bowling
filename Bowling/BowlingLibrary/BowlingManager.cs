@@ -7,8 +7,8 @@ namespace BowlingLibrary
 {
     public class BowlingManager : IBowlingManager
     {
-        private int framesNumber { get; set; }
-        private bool GameStarted { get; set; }
+        private int framesNumber;
+        private bool GameStarted;
 
         public Dictionary<string, List<Frame>> gameBoard { get; }
 
@@ -62,7 +62,6 @@ namespace BowlingLibrary
                 }
                 frames.Add(new LastFrame());
 
-                //implement last shot
                 this.gameBoard.Add(p, frames);
             }
         }
@@ -179,9 +178,9 @@ namespace BowlingLibrary
         }     
 
 
-        public (int, int?) ComputeScore(List<Frame> Frames, int i, int countDouble, int? currentFrameScore)
+        public (int, int?) ComputeScore(List<Frame> frames, int i, int countDouble, int? currentFrameScore)
         {
-            if (Frames[i].IsStrike() && (i != framesNumber - 1)) //not last frame
+            if (frames[i].IsStrike() && (i != framesNumber - 1)) //not last frame
             {
                 countDouble = countDouble < 3 ? countDouble + 1 : countDouble;
                 currentFrameScore += 10 * countDouble;
@@ -189,29 +188,29 @@ namespace BowlingLibrary
             }
             else
             {
-                currentFrameScore += Frames[i].FirstAndSecondShotsSum();
+                currentFrameScore += frames[i].FirstAndSecondShotsSum();
 
                 if (countDouble != 0)
                 {
-                    currentFrameScore += Frames[i].FirstAndSecondShotsSum();
+                    currentFrameScore += frames[i].FirstAndSecondShotsSum();
 
                     if (i > 1 && countDouble > 1)
                     {
-                        currentFrameScore += Frames[i].FirstShot;
+                        currentFrameScore += frames[i].FirstShot;
                     }
                 }
 
                 countDouble = 0;
             }
 
-            if (i > 0 && Frames[i-1].IsSpare())
+            if (i > 0 && frames[i-1].IsSpare())
             {
-                currentFrameScore += Frames[i].FirstShot;
+                currentFrameScore += frames[i].FirstShot;
             }
 
             if (i == framesNumber - 1)
             {
-                currentFrameScore = currentFrameScore + (Frames[i] as LastFrame).ThirdShot;
+                currentFrameScore += (frames[i] as LastFrame).ThirdShot;
             }
 
             (int, int?) result = (countDouble, currentFrameScore);

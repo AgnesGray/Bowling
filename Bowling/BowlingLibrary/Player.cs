@@ -6,7 +6,7 @@ namespace BowlingLibrary
 {
     public class Player : IPlayer
     {
-        public string Name { get; set; }
+        public string Name { get; }
 
         public int? TotalScore { get; }
 
