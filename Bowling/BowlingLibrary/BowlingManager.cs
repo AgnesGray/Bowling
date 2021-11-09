@@ -136,11 +136,11 @@ namespace BowlingLibrary
         {
             if (lastFrame.FirstAndSecondShotsSum() < 10)
             {
-                (lastFrame as LastFrame).ThirdShot = 0;
+                (lastFrame as LastFrame).SaveThirdShot(0);
             }
             else
             {
-                (lastFrame as LastFrame).ThirdShot = pins;
+                (lastFrame as LastFrame).SaveThirdShot(pins);
             }
         }
 

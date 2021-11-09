@@ -6,8 +6,8 @@ namespace BowlingLibrary
 {
     public class Frame : IFrame
     {
-        public int? FirstShot { get; set; }
-        public int? SecondShot { get; set; }
+        public int? FirstShot { get; private set; }
+        public int? SecondShot { get; private set; }
 
 
         public bool IsStrike()
@@ -46,7 +46,7 @@ namespace BowlingLibrary
         {
             if (SecondShot == null && FirstShot != null)
             {
-                SecondShot = pins;//pins <= 10 - FirstShot
+                SecondShot = pins;
             }
         }
 

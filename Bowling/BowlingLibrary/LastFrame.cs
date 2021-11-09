@@ -6,13 +6,22 @@ namespace BowlingLibrary
 {
     public class LastFrame : Frame
     {
-        public int? ThirdShot { get; set; }
+        public int? ThirdShot { get; private set; }
+
+
+        public override void SaveFirstShot(int pins)
+        {
+            if (FirstShot == null)
+            {
+                SaveFirstShot(pins);
+            }
+        }
 
         public override void SaveSecondShot(int pins)
         {
             if ( SecondShot == null && FirstShot != null)
             {
-                SecondShot = pins;
+                SaveSecondShot(pins);
             }
 
             if (FirstAndSecondShotsSum() < 10)
@@ -21,11 +30,15 @@ namespace BowlingLibrary
             }
         }
 
-        public override void SaveFirstShot(int pins)
+        public void SaveThirdShot(int pins)
         {
-            if (FirstShot == null)
+            if (FirstShot != null && SecondShot != null && FirstAndSecondShotsSum() >= 10)
             {
-                FirstShot = pins;
+                ThirdShot = pins;
+            }
+            else
+            {
+                ThirdShot = 0;
             }
         }
 
