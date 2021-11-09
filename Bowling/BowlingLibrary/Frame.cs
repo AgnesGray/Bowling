@@ -22,7 +22,7 @@ namespace BowlingLibrary
         {
             int? TotalPins = FirstShot + SecondShot;
 
-            if (TotalPins == 10 || !IsStrike())
+            if (TotalPins == 10 && !IsStrike())
                 return true;
             else
                 return false;
@@ -44,7 +44,7 @@ namespace BowlingLibrary
 
         public virtual void SaveSecondShot(int pins)
         {
-            if (SecondShot == null && FirstShot != null)
+            if (SecondShot == null && FirstShot != null)//
             {
                 SecondShot = pins;
             }
