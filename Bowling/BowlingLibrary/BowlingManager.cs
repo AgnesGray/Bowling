@@ -7,7 +7,7 @@ namespace BowlingLibrary
 {
     public class BowlingManager : IBowlingManager
     {
-        private int framesNumber;
+        private int framesNumber { get; }
         private bool GameStarted;
 
         public Dictionary<string, List<Frame>> gameBoard { get; }
