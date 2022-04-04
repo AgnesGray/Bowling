@@ -1,0 +1,32 @@
+assembly-versioning-scheme: MajorMinorPatch
+mode: Mainline
+branches:
+  master:
+    regex: ^master
+    tag: ''
+  release:
+    regex: ^releases?[/-]
+    mode: ContinuousDeployment
+    tag: beta
+    is-release-branch: true
+  hotfix:
+    regex: ^hotfix(es)?[/-]
+    tag: beta
+  feature:
+    regex: ^features?[/-]
+    mode: ContinuousDeployment
+    tag: useBranchName
+  pull-request:
+    regex: ^(pull|pull\-requests|pr)[/-]
+    mode: ContinuousDeployment
+    tag: PullRequest
+  support:
+    regex: ^support[/-]
+    tag: ''
+  develop:
+    regex: ^dev(elop)?(ment)?$
+    mode: ContinuousDeployment
+    tag: alpha
+    tracks-release-branches: true
+ignore:
+  sha: []
